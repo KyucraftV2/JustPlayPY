@@ -6,7 +6,6 @@ class ClasseJ:
         self.baseforce = baseforce
 
 
-
 class Arme:
 
     def __init__(self,nom,degats,portee):
