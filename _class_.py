@@ -1,3 +1,18 @@
+class player:
+
+    def __init(self,pv,classe,coords):
+        self._pv = pv
+        self.classe = ClasseJ
+        self.coords = coords
+
+    def get_pv(self):
+        return self._pv
+
+    def set_pv(self, val):
+        self._pv = val
+
+    pv = property(get_pv, set_pv) 
+
 class ClasseJ:
 
     def __init__(self,basepv,arme,baseforce):
@@ -30,17 +45,3 @@ class Arme:
 
     degats = property(get_degats,set_degats)
 
-class Joueur:
-
-    def __init(self,pv,classe,coords):
-        self._pv = pv
-        self.classe = ClasseJ
-        self.coords = coords
-
-    def get_pv(self):
-        return self._pv
-
-    def set_pv(self, val):
-        self._pv = val
-
-    pv = property(get_pv, set_pv) 

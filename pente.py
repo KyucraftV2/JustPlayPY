@@ -17,20 +17,26 @@
                 gf1 = round((( Map.mapa[i][1] - Map.mapa[adv.symbole][1])  / (Map.mapa[i][0] - Map.mapa[adv.symbole][0]))*100)#calcules la pentes du joueur 2 avec les obstacles
                 player2.append(gf1)
             '''
-            Si la pente est la meme cela veut dire que le tir est en direction de la cible 
+            #Si la pente est la meme cela veut dire que le tir est en direction de la cible 
+            
             '''
             if player1[i] == player2[i]:#vérifie si un obstacle se trouve sur la trajectoire
 
                 if ((Map.mapa[i][0]>Map.mapa[self.symbole][0])and(Map.mapa[i][0]>Map.mapa[adv.symbole][0]))or ((Map.mapa[i][1]>Map.mapa[self.symbole][1])and(Map.mapa[i][1]>Map.mapa[adv.symbole][1])):
                     print('L ennemi est a découvert Chef')
                     '''
+
+                    '''
                     les pentes sont les mm pour les deux joueurs mais l obstacles se trouvent derriere eux 
                     un obstacle se trouve derriere la cible
                     '''
+                    '''
                 else:
+                    '''
                     '''
                     les pentes sont les mm pour les deux joueurs
                     un obstacle se trouve entre la cible et le tireur
                     '''
                     touché = True
                     print('dommage tu as touché un caillou')  
+                    '''
