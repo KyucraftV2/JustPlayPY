@@ -10,3 +10,7 @@ Archer = ClasseJ(120, Arc, 20)
 Berserker = ClasseJ(90, Hache, 100)
 Chevlier = ClasseJ(100, Epee, 70)
 Cavalier=ClasseJ(110, Lance, 45)
+
+kliklou=player(Archer,0)
+
+print(kliklou.get_pv())

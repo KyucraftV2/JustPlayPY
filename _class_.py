@@ -1,8 +1,8 @@
 class player:
 
-    def __init(self,pv,classe,coords):
-        self._pv = pv
+    def __init__(self,classe,coords):
         self.classe = ClasseJ
+        self.pv = classe._basepv
         self.coords = coords
 
     def get_pv(self):
@@ -13,13 +13,14 @@ class player:
 
     pv = property(get_pv, set_pv) 
 
+
+
 class ClasseJ:
 
     def __init__(self,basepv,arme,baseforce):
-        self.basepv=basepv
+        self._basepv=basepv
         self.arme = Arme
         self.baseforce = baseforce
-
 
 class Arme:
 
