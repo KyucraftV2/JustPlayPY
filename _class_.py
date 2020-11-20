@@ -9,7 +9,7 @@ class player:
         return self._pv
 
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
-        self._pv = val
+        self._pv += val
 
     pv = property(get_pv, set_pv) 
 
