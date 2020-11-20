@@ -1,3 +1,5 @@
+#Ce fichier est juste la pour qu'on ai accès a ce qui calcule pour nos obstacles mais ne sert à rien concrétement
+
         '''
         player1 = []#la ou se range les pentes du joueur 1 avec tous les obstacles
         player2 = []#la ou se range les pentes du joueur 2 avec tous les obstacles
