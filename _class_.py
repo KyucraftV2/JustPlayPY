@@ -1,9 +1,14 @@
+from map import * 
+
 class player:
 
-    def __init__(self,classe,coords): #initialiseur
+    def __init__(self,nom,classe,x,y): #initialiseur
         self.classe = ClasseJ
         self._pv = classe._basepv #attribut public
-        self.coords = coords
+        self.x = x
+        self.y = y
+        self.nom = nom
+        Map.mapa[self.nom] = self.x,self.y
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
         return self._pv
