@@ -51,3 +51,12 @@ class Arme:
         self._degats = val
 
     degats = property(get_degats,set_degats)
+
+    '''
+class jouage:
+
+    def __init__(self,nom,degats,portee): #initialiseur
+    self._nom = nom
+    self._degats = degats
+    self.portee = portee
+'''
