@@ -31,3 +31,6 @@ class Map:
     def obstacl(self,obstacle):
         for i in range(obstacle):
             Map.mapa[i] = random.randint(0, self.x) , random.randint(0, self.y)
+
+    #Faire une fonction pour placer les joueurs créé dans jeuv1.py
+    #Commente stp le code pour que je comprenne tout

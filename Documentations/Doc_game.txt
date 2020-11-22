@@ -2,3 +2,6 @@ __class__.py définit les classes des joueurs
 
 def_armes_classe.py est le lieu des créations de notre arsenal et la mise en place des classes.
 
+map.py va créer notre map, placer nos joueurs mais aussi place aléatoirement les obstacles.
+
+jeuv1.py va être l'endroit de notre cycle de jeu
