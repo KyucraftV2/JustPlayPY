@@ -3,4 +3,7 @@ V1:
 
 V2:
     Map prete, ajout d'une nouvelle arme et d'une nouvelle classes
+    Petit probleme d'obstacles a regler (sur v3)
+    jeuv1.py ajouté
+    map.py ajouté
     
