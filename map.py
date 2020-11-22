@@ -31,8 +31,3 @@ class Map:
     def obstacl(self,obstacle):
         for i in range(obstacle):
             Map.mapa[i] = random.randint(0, self.x) , random.randint(0, self.y)
-
-
-
-
-

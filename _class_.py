@@ -51,4 +51,3 @@ class Arme:
         self._degats = val
 
     degats = property(get_degats,set_degats)
-

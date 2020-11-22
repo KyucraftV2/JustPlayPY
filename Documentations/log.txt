@@ -1,0 +1,6 @@
+V1:
+    Premiere version compte seulement les classes
+
+V2:
+    Map prete, ajout d'une nouvelle arme et d'une nouvelle classes
+    
