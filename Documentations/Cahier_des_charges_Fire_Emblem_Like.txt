@@ -1,0 +1,32 @@
+Principe du jeu :
+    Vous et votre adversaire contrôlez un personnage (un chacun), le but est d'enlever tout les points de vie a votre
+    adversaire.
+    Pour cela plusieurs armes sont à votre disposition et même plusieurs type de soldats.
+    Pour vous déplacer il suffit d'utiliser la souris est de cliquer sur une des huit cases autour de vous pour vous 
+    déplacer.
+
+Cahier des charges :
+
+    Avoir différentes armes, qu'on peut choisir au début du jeu,
+        --> transformer ces différentes armes en classe avec des stats différentes selon les classes
+    
+    Créer une map TKINTER (définir la taille)
+        --> à terme mettre des obstacles pour pimenter la partie
+		--> calculer les pentes de obstacle/J1 et obstacle/J2 pour voir si les joueurs sont à couvert
+
+    Possibilité d'avoir plusieurs personnages (Max 8 sur la map)--> système de recrutement ? Ou défini de base ?
+
+    Personnages :
+        PV,
+        son arme,
+        sa classe(type de soldat), 
+        son équipe,
+        son nom
+
+    Interactions entre joueurs:
+        --> Si l'ennemi est assez proche (Selon l'arme, si il n'y as pas d'obstacles devant) , le joueur peut cliquer 
+	    dessus pour l'attaquer et donc faire perdre des PV
+
+    -------------------------------------------------------------------------------------------
+
+    Faire une interface graphique

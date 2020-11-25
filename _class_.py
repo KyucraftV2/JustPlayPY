@@ -101,14 +101,34 @@ class Game:
         self.bouger(0,10)
 
     def bouger(self,dx,dy):
-        if self._tour < 5:
-            self.tour_par_tour()
+        if self.p1._tour < 5:
+            self.p1.tour_par_tour()
         else:
-            self.tour_par_tour()
+            self.p2.tour_par_tour()
 
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
         Game.canva.pack()
+        for key in Map.mapa:
+            if type(key) == str : 
+                Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
+            if type(key) == str : 
+                Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
+
+        for i in range(round(self.largeur/10)):
+            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur , fill="black")#lignes
+
+        for i in range(round(self.largeur/10)):
+            Game.canva.create_line(0 , i*10 , self.largeur , i*10 , fill="black")#lignes
+
+
+        Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
+        Bouton_Quitter.pack()
+        Game.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
+        Game.canva.bind_all('<Left>', self.gauche)
+        Game.canva.bind_all('<Up>', self.haut)
+        Game.canva.bind_all('<Down>', self.bas)
+        Game.fenetre.mainloop()#affiche le canva
         
 
 '''

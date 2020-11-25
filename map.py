@@ -10,6 +10,7 @@ class Map:
     trouv = []
     mapa = {}
     prenom = []
+    obstacle_dic= {}
 #PROBLEMOS il faut que ca soit une VARIABLE
 
     def __init__(self,x,y,ob):
@@ -17,39 +18,8 @@ class Map:
         self.y = y
         self.ob = ob
 
-    
-    
-
-    '''
-    def création(self,x,y):
-  
-        self.obstacl(self.ob)#lance la fonction obstacle 
-        Map.fenetre.geometry('%sx%s'%(self.x+50,self.y+50))
-        
-        Map.canva.pack()
-        for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
-            if type(key) == str : 
-                Map.trouv.append(Map.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
-            else:
-                Map.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="grey")
-        
-        for i in range(round(self.x/10)):
-            Map.canva.create_line(i*10 ,0  ,i*10  ,self.x , fill="black")#lignes
-
-        for i in range(round(self.x/10)):
-            Map.canva.create_line(0 , i*10 , self.x , i*10 , fill="black")#lignes
-
-        Bouton_Quitter=Button(Map.fenetre, text ='Quitter', command = Map.fenetre.destroy)#boutton pour quitter le jeu
-        Bouton_Quitter.pack()
-        Map.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
-        Map.canva.bind_all('<Left>', self.gauche)
-        Map.canva.bind_all('<Up>', self.haut)
-        Map.canva.bind_all('<Down>', self.bas)
-        Map.fenetre.mainloop()#affiche le canva
-'''
-
     def créer_obstacl(self,obstacle):
         for i in range(obstacle):
-            Map.mapa[i] = random.randint(0,round(self.x/10))  *10 , random.randint(0, round(self.y/10)) *10 #création des obstacle , physique 
-            #avec player pas encore faite 
+            Map.obstacle_dic[i] = random.randint(0,round(self.x/10))  *10 , random.randint(0, round(self.y/10)) *10 #création des obstacle , physique 
+            #avec player pas encore faite
 
