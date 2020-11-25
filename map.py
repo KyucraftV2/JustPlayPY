@@ -70,6 +70,6 @@ class Map:
     def bouger(self):
         Map.canva.pack()
         Map.canva.create_rectangle(Map.mapa['marty'][0],Map.mapa[('marty')][1],Map.mapa['marty'][0]+10,Map.mapa['marty'][1]+10,fill="blue")
-        Map.fenetre.mainloop()
+        #Map.fenetre.mainloop()
         Map.tour += 1 
 
