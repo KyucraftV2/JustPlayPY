@@ -15,6 +15,7 @@ Cavalier=ClasseJ(110, Lance, 45)
 
 
 
-marty = player('marty',Archer,50,50)
-tonpere= Map(500,500,5)
+marty = player('marty',Archer,18,18)#mettre les coordonnées entre 0 et 50 
+
+tonpere= Map(500,500,40)
 
