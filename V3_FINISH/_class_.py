@@ -168,10 +168,20 @@ class Game:
         if self._tour > 5:
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
+            print(Map.mapa)
+            Map.prenom.append(Map.prenom[0])
+            Map.prenom.pop(0)
+            print(Map.prenom)
             self._tour = 0
         else : self.set_tour(1)
         Game.canva.pack()
-        Game.canva.move(Map.trouv[0],dx,dy)
+        Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] + dx ,Map.mapa[Map.prenom[0]][1] + dy
+        if (Map.mapa[Map.prenom[0]][0] > 500) or (Map.mapa[Map.prenom[0]][1] > 500) or (Map.mapa[Map.prenom[0]][0]< 0) or (Map.mapa[Map.prenom[0]][1]< 0):
+            Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
+            print("ta cru tt ki frero!!!")
+        else:
+            Game.canva.move(Map.trouv[0],dx,dy)
+        
 
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
@@ -189,6 +199,7 @@ class Game:
         for i in range(round(self.largeur/10)):
             Game.canva.create_line(0 , i*10 , self.largeur , i*10 , fill="black")#lignes
 
+        
 
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()
