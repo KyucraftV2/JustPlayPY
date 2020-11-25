@@ -10,7 +10,6 @@ class player:
         self.nom = nom 
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
-        self._tour = 0
 
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
@@ -19,29 +18,16 @@ class player:
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
 
-    def get_tour(self):
-        return self._tour
 
-    def set_tour(self, val):
-        self._tour += val
 
-    def tour_par_tour(self):
-        if self.tour > 5:
-            Map.prenom.append(Map.prenom[0])
-            Map.prenom.pop
-            Map.trouv.append(Map.trouv[0])
-            Map.trouv.pop
-            print(Map.prenom)
-            self.tour = 0
-        else : self.set_tour(1)
+
 
     def attaquer(self,adv):
-
         player1 = []
         player2 = []
         '''
         Entrée:Perso , Map.prenom[01] -> str,a= arme -> str
-        Sortie:Map-> dico , position des Persos, self attaque avec a(arme) la cible Map.prenom[01](Map.prenom[01]ersaire),si l Map.prenom[01] hors de porté précision/3  
+        Sortie:Map-> dico , position des Persos, self attaque avec a(arme) la cible Map.prenom[01](Map.prenom[01]ersaire),si l Map.prenom[1] hors de porté précision/3  
         
         self.mappin()
         Map.prenom[01].mappin()
@@ -70,6 +56,7 @@ class player:
                     touché = True
                     print('dommage tu as touché un caillou')  
 
+
         '''
         porté = (Perso.armes[a])[3]
         assert Map.prenom[01].pv or self.pv <= 0
@@ -88,8 +75,9 @@ class player:
                 preci = preci /3
         y = random.randint(1, 100)
         '''
-        self.set_pv(-5)
-        print('tir réussi')
+
+        adv.set_pv(-80)
+
 
         '''
         else:
@@ -100,11 +88,8 @@ class player:
                 print('tir raté')
         '''
         print(f"{self.nom} : {self._pv}")
+        print(f"{adv.nom} : {adv._pv}")
 
-    
-        
-
-    tour = property(get_tour, set_tour)
     pv = property(get_pv, set_pv) 
 
 
@@ -142,6 +127,7 @@ class Arme:
         self._degats = val
 
     degats = property(get_degats,set_degats)
+    
 
 
 
@@ -156,7 +142,16 @@ class Game:
         self.maap = maap
         self.p1 = p1
         self.p2 = p2
+        self._tour = 0
 
+    def get_tour(self):
+        return self._tour
+
+    def set_tour(self, val):
+        self._tour += val
+
+    tour = property(get_tour, set_tour)
+    
     def droite(self,event):
         self.bouger(10,0)
 
@@ -170,10 +165,13 @@ class Game:
         self.bouger(0,10)
 
     def bouger(self,dx,dy):
-        if self.p1._tour < 5:
-            self.p1.tour_par_tour()
-        else:
-            self.p2.tour_par_tour()
+        if self._tour > 5:
+            Map.trouv.append(Map.trouv[0])
+            Map.trouv.pop(0)
+            self._tour = 0
+        else : self.set_tour(1)
+        Game.canva.pack()
+        Game.canva.move(Map.trouv[0],dx,dy)
 
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
@@ -190,7 +188,7 @@ class Game:
 
         for i in range(round(self.largeur/10)):
             Game.canva.create_line(0 , i*10 , self.largeur , i*10 , fill="black")#lignes
-        print(self.p2.pv)
+
 
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()

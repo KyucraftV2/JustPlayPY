@@ -4,8 +4,6 @@ from _class_ import *
 import tkinter as tk
 from tkinter import *
 #TENGO UNA PROBLEMA MUY IMPORTANTES QUE quand on bouge trop le jeu plante no sabo porque
-
-
 class Map:
     trouv = []
     mapa = {}

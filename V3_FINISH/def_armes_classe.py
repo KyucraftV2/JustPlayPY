@@ -22,6 +22,6 @@ HAUTEUR = 500
 mazp = Map(500, 500, 20)
 jeu = Game(500, 500, mazp, marty, george)
 jeu.creation(LARGEUR, HAUTEUR)
-marty.attaquer('george')
+marty.attaquer(george)
 
-print(george.pv)
+
