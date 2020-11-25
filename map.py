@@ -17,6 +17,7 @@ class Map:
         self.x = x
         self.y = y
         self.ob = ob
+        self.créer_obstacl(self.ob)
 
     def créer_obstacl(self,obstacle):
         for i in range(obstacle):

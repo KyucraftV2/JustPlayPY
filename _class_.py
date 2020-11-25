@@ -35,6 +35,74 @@ class player:
             self.tour = 0
         else : self.set_tour(1)
 
+    def attaquer(self,adv):
+
+        player1 = []
+        player2 = []
+        '''
+        Entrée:Perso , Map.prenom[01] -> str,a= arme -> str
+        Sortie:Map-> dico , position des Persos, self attaque avec a(arme) la cible Map.prenom[01](Map.prenom[01]ersaire),si l Map.prenom[01] hors de porté précision/3  
+        
+        self.mappin()
+        Map.prenom[01].mappin()
+        '''
+        
+        touché = False
+        for i in range(len(Map.obstacle_dic)):
+            if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
+                gf = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])*100   
+                player1.append(gf)
+            else: 
+                gf = round((( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])  / (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[0]][0]))*100)   
+                player1.append(gf)
+            if (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[1]][0]) == 0 :
+                gf1 = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[1]][1])*100   
+                player2.append(gf1)
+            else: 
+                gf1 = round((( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[1]][1])  / (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[1]][0]))*100)   
+                player2.append(gf1)
+
+            if player1[i] == player2[i]:
+
+                if ((Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[0]][0])and(Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[1]][0]))or ((Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[0]][1])and(Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[1]][1])):
+                    print('L ennemi est a découvert Chef')
+                else:
+                    touché = True
+                    print('dommage tu as touché un caillou')  
+
+        '''
+        porté = (Perso.armes[a])[3]
+        assert Map.prenom[01].pv or self.pv <= 0
+        preci = (Perso.armes[a])[1] 
+        
+        if self.y < Map.prenom[01].y :
+            if self.x < Map.prenom[01].x :
+                if (porté +self.y) < Map.prenom[01].y:
+                    preci = preci /3
+                if (porté +self.x) < Map.prenom[01].x:
+                    preci = preci /3
+        else :
+            if (porté -self.y) < Map.prenom[01].y:
+                preci = preci /3
+            if (porté -self.x) < Map.prenom[01].x:
+                preci = preci /3
+        y = random.randint(1, 100)
+        '''
+        self.set_pv(-5)
+        print('tir réussi')
+
+        '''
+        else:
+            if y >= (100 - preci):
+                Map.prenom[01].pv -= (Perso.armes[a])[0]
+                print('tir réussi')
+            else:
+                print('tir raté')
+        '''
+        print(f"{self.nom} : {self._pv}")
+
+    
+        
 
     tour = property(get_tour, set_tour)
     pv = property(get_pv, set_pv) 
@@ -81,6 +149,7 @@ class Arme:
 class Game:
     fenetre = tk.Tk()
     canva = tk.Canvas(fenetre, width=500+10, height=500+10)
+
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
         self.hauteur = hauteur
@@ -109,18 +178,19 @@ class Game:
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
         Game.canva.pack()
-        for key in Map.mapa:
-            if type(key) == str : 
-                Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
-            if type(key) == str : 
-                Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
+        Game.canva.pack()
+        for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
+            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
 
+        for i in range(len(Map.obstacle_dic)):
+            Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
+        
         for i in range(round(self.largeur/10)):
             Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur , fill="black")#lignes
 
         for i in range(round(self.largeur/10)):
             Game.canva.create_line(0 , i*10 , self.largeur , i*10 , fill="black")#lignes
-
+        print(self.p2.pv)
 
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()
@@ -129,7 +199,9 @@ class Game:
         Game.canva.bind_all('<Up>', self.haut)
         Game.canva.bind_all('<Down>', self.bas)
         Game.fenetre.mainloop()#affiche le canva
-        
+
+    
+
 
 '''
 class jouage:
