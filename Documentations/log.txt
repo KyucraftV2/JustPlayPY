@@ -12,3 +12,5 @@ V3 :
     Ajout de l'attribut Tour dans la class Player
     Ajout de l'arbalete et de l'archer lourd
     Création class Game
+    Déplacement cassé.
+    jeuv1 retiré --> tout se passe dans def_armes_classe
