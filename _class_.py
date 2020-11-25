@@ -10,7 +10,7 @@ class player:
         self.nom = nom 
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
-        self.tour = 0
+        self._tour = 0
 
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
@@ -18,6 +18,12 @@ class player:
 
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
+
+    def get_tour(self):
+        return self._tour
+
+    def set_tour(self, val):
+        self._tour += val
 
     def tour_par_tour(self):
         if self.tour > 5:
@@ -27,8 +33,10 @@ class player:
             Map.trouv.pop
             print(Map.prenom)
             self.tour = 0
-        self.tour += 1
+        else : self.set_tour(1)
 
+
+    tour = property(get_tour, set_tour)
     pv = property(get_pv, set_pv) 
 
 

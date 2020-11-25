@@ -21,7 +21,6 @@ class Map:
         self.création(self.x,self.y)
     
     def droite(self,event):
-        #mettre en blanc les carrés sur lesquels je suis passé , probleme Repetition , a revoir,URGENTTT
         self.bouger(10,0)
 
     def gauche(self,event):
@@ -61,7 +60,7 @@ class Map:
         Map.fenetre.mainloop()#affiche le canva
         
 
-    def obstacl(self,obstacle):
+    def créer_obstacl(self,obstacle):
         for i in range(obstacle):
             Map.mapa[i] = random.randint(0,round(self.x/10))  *10 , random.randint(0, round(self.y/10)) *10 #création des obstacle , physique 
             #avec player pas encore faite 
@@ -70,6 +69,3 @@ class Map:
         player.tour_par_tour()      
         Map.canva.pack()
         Map.canva.move(Map.trouv,dx,dy)
-
-
-

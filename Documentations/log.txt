@@ -6,4 +6,8 @@ V2:
     Petit probleme d'obstacles a regler (sur v3)
     jeuv1.py ajouté
     map.py ajouté
-    
+
+V3 : 
+    Amélioration de la classe Map
+    Ajout de l'attribut Tour dans la class Player
+    Ajout de l'arbalete et de l'archer lourd

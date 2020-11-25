@@ -16,6 +16,6 @@ Cavalier=ClasseJ(110, Lance, 45)
 
 
 marty = player('marty',Archer,18,18)#mettre les coordonnées entre 0 et 50 
-
+george = player('Georges', Cavalier, 22, 22)
 tonpere= Map(500,500,40)
 
