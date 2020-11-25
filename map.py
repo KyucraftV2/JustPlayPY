@@ -20,17 +20,7 @@ class Map:
         self.ob = ob
         self.création(self.x,self.y)
     
-    def droite(self,event):
-        self.bouger(10,0)
-
-    def gauche(self,event):
-        self.bouger(-10,0)
-
-    def haut(self,event):
-        self.bouger(0,-10)
-
-    def bas(self,event):
-        self.bouger(0,10)
+    
 
 
     def création(self,x,y):
@@ -65,7 +55,3 @@ class Map:
             Map.mapa[i] = random.randint(0,round(self.x/10))  *10 , random.randint(0, round(self.y/10)) *10 #création des obstacle , physique 
             #avec player pas encore faite 
 
-    def bouger(self,dx,dy):
-        player.tour_par_tour()      
-        Map.canva.pack()
-        Map.canva.move(Map.trouv,dx,dy)

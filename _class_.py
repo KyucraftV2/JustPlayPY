@@ -78,7 +78,31 @@ class Arme:
 
 
 
+class Game:
+    def __init__(self, largeur, hauteur, maap, p1, p2):
+        self.largeur = largeur
+        self.hauteur = hauteur
+        self.maap = maap
+        self.p1 = p1
+        self.p2 = p2
 
+    def droite(self,event):
+        self.bouger(10,0)
+
+    def gauche(self,event):
+        self.bouger(-10,0)
+
+    def haut(self,event):
+        self.bouger(0,-10)
+
+    def bas(self,event):
+        self.bouger(0,10)
+
+    def bouger(self,dx,dy):
+        if self._tour < 5:
+            self.tour_par_tour()
+        else:
+            self.tour_par_tour()
 
 
 '''
