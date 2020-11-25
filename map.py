@@ -1,4 +1,3 @@
-from __future__ import annotations
 import random
 from _class_ import *
 
@@ -11,18 +10,17 @@ class Map:
     trouv = []
     mapa = {}
     prenom = []
-    fenetre = tk.Tk()
-    canva = tk.Canvas(fenetre, width=500+10, height=500+10)#PROBLEMOS il faut que ca soit une VARIABLE
+#PROBLEMOS il faut que ca soit une VARIABLE
 
     def __init__(self,x,y,ob):
         self.x = x
         self.y = y
         self.ob = ob
-        self.création(self.x,self.y)
+
     
     
 
-
+    '''
     def création(self,x,y):
   
         self.obstacl(self.ob)#lance la fonction obstacle 
@@ -48,7 +46,7 @@ class Map:
         Map.canva.bind_all('<Up>', self.haut)
         Map.canva.bind_all('<Down>', self.bas)
         Map.fenetre.mainloop()#affiche le canva
-        
+'''
 
     def créer_obstacl(self,obstacle):
         for i in range(obstacle):

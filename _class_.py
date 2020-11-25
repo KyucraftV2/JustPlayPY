@@ -79,6 +79,8 @@ class Arme:
 
 
 class Game:
+    fenetre = tk.Tk()
+    canva = tk.Canvas(fenetre, width=500+10, height=500+10)
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
         self.hauteur = hauteur
@@ -104,6 +106,10 @@ class Game:
         else:
             self.tour_par_tour()
 
+    def creation(self, largeur, hauteur):
+        Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
+        Game.canva.pack()
+        
 
 '''
 class jouage:

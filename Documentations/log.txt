@@ -11,3 +11,4 @@ V3 :
     Amélioration de la classe Map
     Ajout de l'attribut Tour dans la class Player
     Ajout de l'arbalete et de l'archer lourd
+    Création class Game
