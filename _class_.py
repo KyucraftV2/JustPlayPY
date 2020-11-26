@@ -157,13 +157,16 @@ class Game:
             Game.canva.move(Map.trouv[0],dx,dy)
         
 
+    def creation_perso(self,couleur):
+        pass
+
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
         Game.canva.pack()
-        Game.canva.pack()
+
+
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
-            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
-                Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][1],Map.mapa[key][1]+10, fill="red"))
+            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=colore))
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
         
