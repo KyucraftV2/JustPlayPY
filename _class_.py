@@ -55,20 +55,19 @@ class player:
 
                 if ((Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[0]][0])and(Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[1]][0]))or ((Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[0]][1])and(Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[1]][1])):
                     print('L ennemi est a découvert Chef')
-                    adv.set_pv(-80)
-                    advpv = adv.get_pv()
-                    selfpv = self.get_pv()
-                    if (advpv < 0) or (selfpv<0):
-                        print(f'{player.tablo_player[0].nom} a gagné')
-                        Game.fenetre.destroy()
-                    print(f'joueur : {self.nom}, pv : {self.pv}')
-                    print(f'joueur : {adv.nom}, pv : {adv.pv}')
-
                 else:
                     touché_caillou = True
                     print('dommage tu as touché un caillou')  
 #pente
-        
+        adv.set_pv(-80)
+        advpv = adv.get_pv()
+        selfpv = self.get_pv()
+        if (advpv < 0) or (selfpv<0):
+            print(f'{player.tablo_player[0].nom} a gagné')
+            Game.fenetre.destroy()
+        print(f'joueur : {self.nom}, pv : {self.pv}')
+        print(f'joueur : {adv.nom}, pv : {adv.pv}')
+
 
 
 
