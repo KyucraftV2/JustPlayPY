@@ -12,16 +12,3 @@ Archer_Lourd = ClasseJ(100, Arbalete, 25)
 Berserker = ClasseJ(90, Hache, 100)
 Chevlier = ClasseJ(100, Epee, 70)
 Cavalier=ClasseJ(110, Lance, 45)
-
-
-
-marty = player('marty',Archer,18,18)#mettre les coordonnées entre 0 et 50 
-george = player('george', Cavalier, 22, 22)
-LARGEUR = 500
-HAUTEUR = 500
-mazp = Map(500, 500, 20)
-jeu = Game(500, 500, mazp, marty, george)
-jeu.creation(LARGEUR, HAUTEUR)
-marty.attaquer(george)
-
-
