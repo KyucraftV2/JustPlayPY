@@ -11,7 +11,7 @@ class player:
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
-        Game.canva.bind_all('<Space>',self.attak )
+        Game.canva.bind_all('<space>',self.attak )
 
 
 
