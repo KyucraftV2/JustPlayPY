@@ -198,11 +198,11 @@ class Game:
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
         
-        for i in range(round(self.largeur/10)):
-            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur , fill="black")#lignes
+        for i in range(round(self.largeur/10)+2):
+            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="black")#lignes
 
-        for i in range(round(self.largeur/10)):
-            Game.canva.create_line(0 , i*10 , self.largeur , i*10 , fill="black")#lignes
+        for i in range(round(self.largeur/10)+2):
+            Game.canva.create_line(0 , i*10 , self.largeur+10 , i*10 , fill="black")#lignes
 
         
 
