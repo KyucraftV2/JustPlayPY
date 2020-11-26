@@ -1,22 +1,33 @@
 V1:
     Premiere version compte seulement les classes
+    Création des premieres armes et classes --> Arc, Hache, Epée et lance
+                                            --> Archer, Berserker, Chevalier et cavalier
 
-V2:
-    Map prete, ajout d'une nouvelle arme et d'une nouvelle classes
-    Petit probleme d'obstacles a regler (sur v3)
+V2: 
+    Ajout d'une nouvelle arme et d'une nouvelle classes (Arbalete // Archer lourd)
+    Ajout de la map et des obstacles et des joeurs
     jeuv1.py ajouté
     map.py ajouté
 
 V3 : 
     Amélioration de la classe Map
-    Ajout de l'attribut Tour dans la class Player
-    Ajout de l'arbalete et de l'archer lourd
+    Ajout du tour par tour (non fonctionnel)
+    Ajout de la fonction attaquer (non fonctionnel)
     Création class Game
     Déplacement cassé.
     jeuv1 retiré --> tout se passe dans def_armes_classe
 
 V4:
-    a écrire
+    Réparation du Déplacement
+    Attaquer semi fonctionnel  --> un seul attaque (à régler)
+    Tour par tour fonctionnel
 
 V5:
-    a ecrire aussi
+    Ajout de la fin du jeu si un des deux meurt
+    Retour dde jeuv1.py mais passé en V2
+        --> Les joueurs choisissent leurs noms et leurs classes
+        --> Affichage propre pour que les joueurs puissent choisir correctement leur classe.
+
+V6:
+    Changement au nivau coloration --> les 2 joueurs ne sont plus de la même couleur
+    

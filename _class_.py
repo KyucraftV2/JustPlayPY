@@ -5,7 +5,7 @@ class player:
     def __init__(self,nom,classe,x,y): #initialiseur
         self.classe = ClasseJ
         self._pv = classe._basepv #attribut public
-        self.x = x
+        self.x = x #coordonnées du personnage
         self.y = y
         self.nom = nom 
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
@@ -129,7 +129,7 @@ class Game:
 
     tour = property(get_tour, set_tour)
     
-    def droite(self,event):
+    def droite(self,event):  #fonction pour bouger
         self.bouger(10,0)
 
     def gauche(self,event):
