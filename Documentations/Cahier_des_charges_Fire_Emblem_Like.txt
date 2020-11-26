@@ -9,11 +9,11 @@ Principe du jeu :
     ----------------------------------------------------------------------------------------
     Cahier des charges :
 
-        Les joueurs vont pouvoir choisir leurs différentes classes au début du jeu,
-        
-        Affichage gérer par la classe Game, une fenetre TKinter est utilisé et pour quitter le jeu, il faut appuyer sur le bouton quitter.
 
-        Possibilité d'avoir plusieurs personnages (Max 8 sur la map)--> système de recrutement ? Ou défini de base ?
+        Les joueurs choisissent leurs noms puis leurs classes.
+        
+        Affichage gérer par la classe Game, une fenetre TKinter est utilisé pour jouer.
+        Pour quitter le jeu, il faut appuyer sur le bouton quitter.
 
         Player :
             PV,
@@ -23,12 +23,13 @@ Principe du jeu :
 
         Arme:
             Nom de l'arme,
-            Les dégats de l'armeLa portée de l'arme
+            Les dégats de l'arme,
+            La portée de l'arme
 
         Game:
             Une largeur (pour créer la fenetre),
-            Une hauteur (pareil)
-            Une Map
+            Une hauteur (pareil),
+            Une Map,
             Et deux player
 
         Map:

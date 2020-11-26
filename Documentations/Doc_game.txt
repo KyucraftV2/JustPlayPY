@@ -1,7 +1,9 @@
-__class__.py définit les classes des joueurs
+_class_.py définit les classes des joueurs
 
-def_armes_classe.py est le lieu de créations des armes des classes, des personnages et est l'endroit du cycle de jeu
+def_armes_classe.py est le lieu de créations des armes des classes
 
 map.py va créer notre map, placer nos joueurs mais aussi place aléatoirement les obstacles.
 
-Pour lancer le jeu, run le fichier jeuV2.py
+jeuV2.py est le lieu de création des personnages et du cycle de jeu.
+
+Pour jouer il sufit de lancer jeuV2.py
