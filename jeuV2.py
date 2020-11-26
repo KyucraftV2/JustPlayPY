@@ -21,9 +21,20 @@ def check_class(class_type):
 nom_j1 = input("Nom Joueur 1:")
 nom_j2 = input("Nom joueur 2:")
 while nom_j2 == nom_j1:
+    print("Ne choissisez pas deux fois le même nom !")
     nom_j2 = input("Nom joueur 2:")
 
+
+print(r"""
+1. Archer
+2. Archer Lourd
+3. Berserker 
+4. Chevalier
+5. Cavalier
+""")
+
 while class_correct == False:
+    print("ATTENTION A NE PAS METTRE DE MAJUSCULE QUANT TU CHOISI TA CLASSE")
     class_type1 = input("Classe Joueur 1:")
     class_type2 = input("Classe Joueur 2:")
     if check_class(class_type1) == True and check_class(class_type2) == True:
