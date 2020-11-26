@@ -65,7 +65,8 @@ class player:
         if (advpv < 0) or (selfpv<0):
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
-
+        print(f'joueur : {self.nom}, pv : {self.pv}')
+        print(f'joueur : {adv.nom}, pv : {adv.pv}')
     pv = property(get_pv, set_pv) 
 
 
@@ -156,9 +157,6 @@ class Game:
         else:
             Game.canva.move(Map.trouv[0],dx,dy)
         
-
-    def creation_perso(self,couleur):
-        pass
 
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
