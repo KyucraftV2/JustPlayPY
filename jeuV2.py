@@ -6,8 +6,8 @@ class_dic = {'1': archer,
             '2': archer_Lourd,
             '3':berserker,
             '4':chevalier,
-            'cavalier':chevalier}
-5
+            '5':chevalier}
+
 def check_class(class_type):
     check = True
     try:
