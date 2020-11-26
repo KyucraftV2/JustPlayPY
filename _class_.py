@@ -11,7 +11,7 @@ class player:
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
-        Game.canva.bind_all('<Space>',self.attak )
+        Game.canva.bind_all('<space>',self.attak )
 
 
 
@@ -58,43 +58,12 @@ class player:
                     touché_caillou = True
                     print('dommage tu as touché un caillou')  
 
-
-        '''
-        porté = (Perso.armes[a])[3]
-        assert Map.prenom[01].pv or self.pv <= 0
-        preci = (Perso.armes[a])[1] 
-        
-        if self.y < Map.prenom[01].y :
-            if self.x < Map.prenom[01].x :
-                if (porté +self.y) < Map.prenom[01].y:
-                    preci = preci /3
-                if (porté +self.x) < Map.prenom[01].x:
-                    preci = preci /3
-        else :
-            if (porté -self.y) < Map.prenom[01].y:
-                preci = preci /3
-            if (porté -self.x) < Map.prenom[01].x:
-                preci = preci /3
-        y = random.randint(1, 100)
-        '''
-
         adv.set_pv(-80)
-
-
-        '''
-        else:
-            if y >= (100 - preci):
-                Map.prenom[01].pv -= (Perso.armes[a])[0]
-                print('tir réussi')
-            else:
-                print('tir raté')
-        '''
-        if (adv._pv < 0) or (self_pv<0):
-            print(f'{player.tablo_player[0]} a gagné')
-            Game.fenetre.destroy
-
-        print(f"{self.nom} : {self._pv}")
-        print(f"{adv.nom} : {adv._pv}")
+        advpv = adv.get_pv()
+        selfpv = self.get_pv()
+        if (advpv < 0) or (selfpv<0):
+            print(f'{player.tablo_player[0].nom} a gagné')
+            Game.fenetre.destroy()
 
     pv = property(get_pv, set_pv) 
 
