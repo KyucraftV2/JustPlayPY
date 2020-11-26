@@ -47,5 +47,5 @@ LARGEUR = 500
 HAUTEUR = 500
 mazp = Map(500, 500, 20)
 jeu = Game(500, 500, mazp, j1, j2)
-jeu.creation(LARGEUR, HAUTEUR)
 print(f"Le joueur rouge est {nom_j1} et le bleu est {nom_j2}")
+jeu.creation(LARGEUR, HAUTEUR)
