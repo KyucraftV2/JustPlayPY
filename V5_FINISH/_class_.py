@@ -22,7 +22,7 @@ class player:
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
 
-    def attak(self,event):
+    def attak(self,event): #change place dans tableau--> PB
         if Game.tour == 0:
             player.tablo_player.append(player.tablo_player[0])
             player.tablo_player.pop(0)
@@ -36,6 +36,7 @@ class player:
         
         
         touché_caillou = False
+        #ente
         for i in range(len(Map.obstacle_dic)):#
             if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
                 gf = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])*100   
@@ -57,7 +58,7 @@ class player:
                 else:
                     touché_caillou = True
                     print('dommage tu as touché un caillou')  
-
+#pente
         adv.set_pv(-80)
         advpv = adv.get_pv()
         selfpv = self.get_pv()
@@ -148,6 +149,7 @@ class Game:
             self._tour = 0
         else : self.set_tour(1)
         Game.canva.pack()
+        #collision border
         Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] + dx ,Map.mapa[Map.prenom[0]][1] + dy
         if (Map.mapa[Map.prenom[0]][0] > 500) or (Map.mapa[Map.prenom[0]][1] > 500) or (Map.mapa[Map.prenom[0]][0]< 0) or (Map.mapa[Map.prenom[0]][1]< 0):
             Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
@@ -166,7 +168,7 @@ class Game:
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
         
         for i in range(round(self.largeur/10)+1):
-            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="black")#lignes
+            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="black")#colonnes
 
         for i in range(round(self.largeur/10)+1):
             Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="black")#lignes
@@ -181,15 +183,3 @@ class Game:
         Game.canva.bind_all('<Down>', self.bas)
         Game.canva.bind_all('<Space>', )
         Game.fenetre.mainloop()#affiche le canva
-
-    
-
-
-'''
-class jouage:
-
-    def __init__(self,nom,degats,portee): #initialiseur
-    self._nom = nom
-    self._degats = degats
-    self.portee = portee
-'''
