@@ -23,9 +23,8 @@ class player:
     pv = property(get_pv, set_pv) 
 
     def attak(self,event): #change place dans tableau--> PB
-        if Game.tour == 0:
-            player.tablo_player.append(player.tablo_player[0])
-            player.tablo_player.pop(0)
+        player.tablo_player.append(player.tablo_player[0])
+        player.tablo_player.pop(0)
         player.tablo_player[0].attaquer(player.tablo_player[1])
         
 
@@ -142,7 +141,7 @@ class Game:
         self.bouger(0,10)
 
     def bouger(self,dx,dy):
-        if self._tour > 6:
+        if self._tour > 5:
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
             Map.prenom.append(Map.prenom[0])
@@ -183,5 +182,5 @@ class Game:
         Game.canva.bind_all('<Left>', self.gauche)
         Game.canva.bind_all('<Up>', self.haut)
         Game.canva.bind_all('<Down>', self.bas)
-        Game.canva.bind_all('<Space>', )
+        Game.canva.bind_all('<space>',)
         Game.fenetre.mainloop()#affiche le canva
