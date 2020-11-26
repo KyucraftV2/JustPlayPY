@@ -4,4 +4,4 @@ def_armes_classe.py est le lieu de créations des armes des classes, des personn
 
 map.py va créer notre map, placer nos joueurs mais aussi place aléatoirement les obstacles.
 
-Pour lancer le jeu, run le fichier def_armes_classes.py
+Pour lancer le jeu, run le fichier jeuV2.py
