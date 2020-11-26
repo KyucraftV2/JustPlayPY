@@ -1,4 +1,4 @@
-Collision avec les rochers
+/!\/!\/!\/!\/!\Collision avec les rochers /!\/!\/!\/!\/!\
 animation attaquer
 Coder les degats et la portée
 

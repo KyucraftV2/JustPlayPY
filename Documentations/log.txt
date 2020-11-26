@@ -30,4 +30,4 @@ V5:
 
 V6:
     Changement au nivau coloration --> les 2 joueurs ne sont plus de la même couleur
-    
+    Fonctionnement de l'attaque
