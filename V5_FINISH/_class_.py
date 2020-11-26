@@ -163,7 +163,7 @@ class Game:
         Game.canva.pack()
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
             Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill="blue"))
-
+                Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][1],Map.mapa[key][1]+10, fill="red"))
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
         
