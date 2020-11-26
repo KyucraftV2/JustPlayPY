@@ -35,7 +35,10 @@ class player:
         
         
         touché_caillou = False
-        #ente
+        #pente  fait pour tout les obstacle pour chaque joueur :  (obstacley - joueury) /(obstaclex - joueurx)  si (obstaclex - joueurx) ==0 alor la pente retenu est juste (obstacley - joueury)
+        #il les append dans player1 et player2 et puis compare les pentes , si une pente en [0] de player1 est la meme que la pente [0] de player2 alor cela veut dire que un obstacle 
+        #est sur la meme pente , soit entre les joueurs ou bien derriere , si l obstacle est entre les deux joueurs renvoie 'dommage tu as touché un caillou'
+
         for i in range(len(Map.obstacle_dic)):#
             if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
                 gf = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])*100   
@@ -53,14 +56,17 @@ class player:
             if player1[i] == player2[i]:
 
                 if ((Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[0]][0])and(Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[1]][0]))or ((Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[0]][1])and(Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[1]][1])):
-                    print('L ennemi est a découvert Chef')
+                    pass 
                 else:
                     touché_caillou = True
                     print('dommage tu as touché un caillou')  
 #pente
-        adv.set_pv(-80)
+        if touché_caillou == False:
+            adv.set_pv(-80)
+
         advpv = adv.get_pv()
         selfpv = self.get_pv()
+
         if (advpv < 0) or (selfpv<0):
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
