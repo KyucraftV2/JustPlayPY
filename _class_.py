@@ -1,7 +1,7 @@
 from map import * 
 
 class player:
-    
+    tablo_player = []
     def __init__(self,nom,classe,x,y): #initialiseur
         self.classe = ClasseJ
         self._pv = classe._basepv #attribut public
@@ -10,6 +10,9 @@ class player:
         self.nom = nom 
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
+        player.tablo_player.append(self)
+
+
 
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
@@ -18,9 +21,18 @@ class player:
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
 
+    def attak(self,event):
+        if Game.tour == 0:
+            player.tablo_player.append(player.tablo_player[0])
+            player.tablo_player.pop(0)
+        player.tablo_player[0].attaquer(player.tablo_player[1])
+
+
     def attaquer(self,adv):
+        
         player1 = []
         player2 = []
+        
         '''
         Entrée:Perso , Map.prenom[01] -> str,a= arme -> str
         Sortie:Map-> dico , position des Persos, self attaque avec a(arme) la cible Map.prenom[01](Map.prenom[01]ersaire),si l Map.prenom[1] hors de porté précision/3  
@@ -29,7 +41,7 @@ class player:
         Map.prenom[01].mappin()
         '''
         
-        touché = False
+        touché_caillou = False
         for i in range(len(Map.obstacle_dic)):
             if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
                 gf = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])*100   
@@ -49,14 +61,47 @@ class player:
                 if ((Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[0]][0])and(Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[1]][0]))or ((Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[0]][1])and(Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[1]][1])):
                     print('L ennemi est a découvert Chef')
                 else:
-                    touché = True
+                    touché_caillou = True
                     print('dommage tu as touché un caillou')  
 
+
+        '''
+        porté = (Perso.armes[a])[3]
+        assert Map.prenom[01].pv or self.pv <= 0
+        preci = (Perso.armes[a])[1] 
+        
+        if self.y < Map.prenom[01].y :
+            if self.x < Map.prenom[01].x :
+                if (porté +self.y) < Map.prenom[01].y:
+                    preci = preci /3
+                if (porté +self.x) < Map.prenom[01].x:
+                    preci = preci /3
+        else :
+            if (porté -self.y) < Map.prenom[01].y:
+                preci = preci /3
+            if (porté -self.x) < Map.prenom[01].x:
+                preci = preci /3
+        y = random.randint(1, 100)
+        '''
+
         adv.set_pv(-80)
+
+
+        '''
+        else:
+            if y >= (100 - preci):
+                Map.prenom[01].pv -= (Perso.armes[a])[0]
+                print('tir réussi')
+            else:
+                print('tir raté')
+        '''
         print(f"{self.nom} : {self._pv}")
         print(f"{adv.nom} : {adv._pv}")
 
     pv = property(get_pv, set_pv) 
+
+
+
 
 
 class ClasseJ:
@@ -105,7 +150,7 @@ class Game:
         self.maap = maap
         self.p1 = p1
         self.p2 = p2
-        self._tour = 0
+        self._tour = 1
 
     def get_tour(self):
         return self._tour
@@ -128,7 +173,7 @@ class Game:
         self.bouger(0,10)
 
     def bouger(self,dx,dy):
-        if self._tour > 5:  #Notre compteur de mouvement pour savoir 
+        if self._tour > 6:
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
             Map.prenom.append(Map.prenom[0])
@@ -139,7 +184,6 @@ class Game:
         Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] + dx ,Map.mapa[Map.prenom[0]][1] + dy
         if (Map.mapa[Map.prenom[0]][0] > 500) or (Map.mapa[Map.prenom[0]][1] > 500) or (Map.mapa[Map.prenom[0]][0]< 0) or (Map.mapa[Map.prenom[0]][1]< 0):
             Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
-            print("ta cru tt ki frero!!!")
         else:
             Game.canva.move(Map.trouv[0],dx,dy)
         
@@ -169,3 +213,15 @@ class Game:
         Game.canva.bind_all('<Up>', self.haut)
         Game.canva.bind_all('<Down>', self.bas)
         Game.fenetre.mainloop()#affiche le canva
+
+    
+
+
+'''
+class jouage:
+
+    def __init__(self,nom,degats,portee): #initialiseur
+    self._nom = nom
+    self._degats = degats
+    self.portee = portee
+'''
