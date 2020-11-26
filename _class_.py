@@ -14,13 +14,13 @@ class player:
         Game.canva.bind_all('<space>',self.attak )
 
 
-
-
     def get_pv(self): #permet de recuperer les pv pour l'affichage
         return self._pv
 
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
+
+    pv = property(get_pv, set_pv) 
 
     def attak(self,event): #change place dans tableau--> PB
         if Game.tour == 0:
@@ -55,19 +55,20 @@ class player:
 
                 if ((Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[0]][0])and(Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[1]][0]))or ((Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[0]][1])and(Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[1]][1])):
                     print('L ennemi est a découvert Chef')
+                    adv.set_pv(-80)
+                    advpv = adv.get_pv()
+                    selfpv = self.get_pv()
+                    if (advpv < 0) or (selfpv<0):
+                        print(f'{player.tablo_player[0].nom} a gagné')
+                        Game.fenetre.destroy()
+                    print(f'joueur : {self.nom}, pv : {self.pv}')
+                    print(f'joueur : {adv.nom}, pv : {adv.pv}')
+
                 else:
                     touché_caillou = True
                     print('dommage tu as touché un caillou')  
 #pente
-        adv.set_pv(-80)
-        advpv = adv.get_pv()
-        selfpv = self.get_pv()
-        if (advpv < 0) or (selfpv<0):
-            print(f'{player.tablo_player[0].nom} a gagné')
-            Game.fenetre.destroy()
-        print(f'joueur : {self.nom}, pv : {self.pv}')
-        print(f'joueur : {adv.nom}, pv : {adv.pv}')
-    pv = property(get_pv, set_pv) 
+        
 
 
 
