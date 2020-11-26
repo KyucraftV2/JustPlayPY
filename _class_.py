@@ -161,12 +161,13 @@ class Game:
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
         Game.canva.pack()
-
+        i=0
 
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
             color_tablo=["red", "blue"]
-            i=0
             Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=color_tablo[i]))
+            print(i)
+            input('...')
             i+=1
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
