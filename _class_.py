@@ -11,6 +11,7 @@ class player:
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
+        Game.canva.bind_all('<Space>',self.attak )
 
 
 
@@ -198,11 +199,11 @@ class Game:
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
         
-        for i in range(round(self.largeur/10)+2):
+        for i in range(round(self.largeur/10)+1):
             Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="black")#lignes
 
-        for i in range(round(self.largeur/10)+2):
-            Game.canva.create_line(0 , i*10 , self.largeur+10 , i*10 , fill="black")#lignes
+        for i in range(round(self.largeur/10)+1):
+            Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="black")#lignes
 
         
 
@@ -212,6 +213,7 @@ class Game:
         Game.canva.bind_all('<Left>', self.gauche)
         Game.canva.bind_all('<Up>', self.haut)
         Game.canva.bind_all('<Down>', self.bas)
+        Game.canva.bind_all('<Space>', )
         Game.fenetre.mainloop()#affiche le canva
 
     
