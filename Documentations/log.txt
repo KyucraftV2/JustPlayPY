@@ -14,3 +14,9 @@ V3 :
     Création class Game
     Déplacement cassé.
     jeuv1 retiré --> tout se passe dans def_armes_classe
+
+V4:
+    a écrire
+
+V5:
+    a ecrire aussi
