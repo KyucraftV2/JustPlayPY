@@ -1,7 +1,1 @@
-classe qui counter les autres classes
-
-pour attaquer:
-        Dégats arme // force de l'attaquant
-        Force du déf
-        Crit  --> 10% (en interdisant le berserker de crit) --> +50% de dégats
-        Esquive --> 10%
+Potion pour se soigner

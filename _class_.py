@@ -168,10 +168,8 @@ class Game:
         if self._tour > 5:
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
-            print(Map.mapa)
             Map.prenom.append(Map.prenom[0])
             Map.prenom.pop(0)
-            print(Map.prenom)
             self._tour = 0
         else : self.set_tour(1)
         Game.canva.pack()
