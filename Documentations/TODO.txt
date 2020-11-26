@@ -1,1 +1,2 @@
-Potion pour se soigner
+Collision avec les rochers
+animation attaquer
