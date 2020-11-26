@@ -18,10 +18,6 @@ class player:
     def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
 
-
-
-
-
     def attaquer(self,adv):
         player1 = []
         player2 = []
@@ -56,44 +52,11 @@ class player:
                     touché = True
                     print('dommage tu as touché un caillou')  
 
-
-        '''
-        porté = (Perso.armes[a])[3]
-        assert Map.prenom[01].pv or self.pv <= 0
-        preci = (Perso.armes[a])[1] 
-        
-        if self.y < Map.prenom[01].y :
-            if self.x < Map.prenom[01].x :
-                if (porté +self.y) < Map.prenom[01].y:
-                    preci = preci /3
-                if (porté +self.x) < Map.prenom[01].x:
-                    preci = preci /3
-        else :
-            if (porté -self.y) < Map.prenom[01].y:
-                preci = preci /3
-            if (porté -self.x) < Map.prenom[01].x:
-                preci = preci /3
-        y = random.randint(1, 100)
-        '''
-
         adv.set_pv(-80)
-
-
-        '''
-        else:
-            if y >= (100 - preci):
-                Map.prenom[01].pv -= (Perso.armes[a])[0]
-                print('tir réussi')
-            else:
-                print('tir raté')
-        '''
         print(f"{self.nom} : {self._pv}")
         print(f"{adv.nom} : {adv._pv}")
 
     pv = property(get_pv, set_pv) 
-
-
-
 
 
 class ClasseJ:
@@ -165,7 +128,7 @@ class Game:
         self.bouger(0,10)
 
     def bouger(self,dx,dy):
-        if self._tour > 5:
+        if self._tour > 5:  #Notre compteur de mouvement pour savoir 
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
             Map.prenom.append(Map.prenom[0])
@@ -206,15 +169,3 @@ class Game:
         Game.canva.bind_all('<Up>', self.haut)
         Game.canva.bind_all('<Down>', self.bas)
         Game.fenetre.mainloop()#affiche le canva
-
-    
-
-
-'''
-class jouage:
-
-    def __init__(self,nom,degats,portee): #initialiseur
-    self._nom = nom
-    self._degats = degats
-    self.portee = portee
-'''
