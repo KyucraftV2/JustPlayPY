@@ -11,7 +11,7 @@ class player:
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
-        Game.canva.bind_all('<space>',self.attak )
+        Game.canva.bind_all('<Space>',self.attak )
 
 
 
@@ -27,23 +27,16 @@ class player:
             player.tablo_player.append(player.tablo_player[0])
             player.tablo_player.pop(0)
         player.tablo_player[0].attaquer(player.tablo_player[1])
-
+        
 
     def attaquer(self,adv):
         
         player1 = []
         player2 = []
         
-        '''
-        Entrée:Perso , Map.prenom[01] -> str,a= arme -> str
-        Sortie:Map-> dico , position des Persos, self attaque avec a(arme) la cible Map.prenom[01](Map.prenom[01]ersaire),si l Map.prenom[1] hors de porté précision/3  
-        
-        self.mappin()
-        Map.prenom[01].mappin()
-        '''
         
         touché_caillou = False
-        for i in range(len(Map.obstacle_dic)):
+        for i in range(len(Map.obstacle_dic)):#
             if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
                 gf = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])*100   
                 player1.append(gf)
@@ -96,6 +89,10 @@ class player:
             else:
                 print('tir raté')
         '''
+        if (adv._pv < 0) or (self_pv<0):
+            print(f'{player.tablo_player[0]} a gagné')
+            Game.fenetre.destroy
+
         print(f"{self.nom} : {self._pv}")
         print(f"{adv.nom} : {adv._pv}")
 
