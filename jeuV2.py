@@ -20,9 +20,29 @@ def check_class(class_type):
 
 nom_j1 = input("Nom Joueur 1:")
 nom_j2 = input("Nom joueur 2:")
+
 while nom_j2 == nom_j1:
     print("Ne choissisez pas deux fois le même nom !")
     nom_j2 = input("Nom joueur 2:")
+
+print(r"""
+0. red 
+1. blue
+2. black
+3. green
+4. yellow 
+5. purple 
+6. pink
+""")
+
+
+player.color.append(int(input("Couleur Joueur 1:")))
+player.color.append(int(input("Couleur Joueur 2:")))
+
+
+while player.color[1] == player.color[0]:
+    print("Ne choissisez pas deux fois la même couleur !")
+    player.color[1]= int(input("Couleur Joueur 2:"))
 
 
 print(r"""
@@ -34,7 +54,6 @@ print(r"""
 """)
 
 while class_correct == False:
-    print("ATTENTION A NE PAS METTRE DE MAJUSCULE QUANT TU CHOISI TA CLASSE")
     class_type1 = input("Classe Joueur 1:")
     class_type2 = input("Classe Joueur 2:")
     if check_class(class_type1) == True and check_class(class_type2) == True:
@@ -47,5 +66,5 @@ LARGEUR = 500
 HAUTEUR = 500
 mazp = Map(500, 500, 20)
 jeu = Game(500, 500, mazp, j1, j2)
-print(f"Le joueur rouge est {nom_j2} et le bleu est {nom_j1}")
+print(f"Le joueur {player.color[1]} est {nom_j2} et le {player.color[0]} est {nom_j1}")
 jeu.creation(LARGEUR, HAUTEUR)

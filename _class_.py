@@ -2,6 +2,7 @@ from map import *
 
 class player:
     tablo_player = []
+    color = []
     def __init__(self,nom,classe,x,y): #initialiseur
         self.classe = ClasseJ
         self._pv = classe._basepv #attribut public
@@ -12,7 +13,7 @@ class player:
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
         Game.canva.bind_all('<space>',self.attak )
-
+        
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
         return self._pv
@@ -27,6 +28,10 @@ class player:
         player.tablo_player.pop(0)
         player.tablo_player[0].attaquer(player.tablo_player[1])
         
+    
+
+
+
 
     def attaquer(self,adv):
         
@@ -168,8 +173,9 @@ class Game:
         Game.canva.pack()
         i=0
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
-            color_tablo=["red", "blue"]
-            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=color_tablo[i]))
+            color_tablo=["red", "blue","black","green","yellow","purple","pink"]
+
+            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=color_tablo[player.color[i]]))
             i+=1
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
