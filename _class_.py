@@ -28,44 +28,43 @@ class player:
         player.tablo_player.pop(0)
         player.tablo_player[0].attaquer(player.tablo_player[1])
         
-    
-
-
-
+    def caillou_verif(self,x,y):
+        lambda x: x + 1
+        return (lambda x: x + 1)(2)
 
     def attaquer(self,adv):
         
         player1 = []
         player2 = []
-        
-        
         touché_caillou = False
         #pente  fait pour tout les obstacle pour chaque joueur :  (obstacley - joueury) /(obstaclex - joueurx)  si (obstaclex - joueurx) ==0 alor la pente retenu est juste (obstacley - joueury)
         #il les append dans player1 et player2 et puis compare les pentes , si une pente en [0] de player1 est la meme que la pente [0] de player2 alor cela veut dire que un obstacle 
         #est sur la meme pente , soit entre les joueurs ou bien derriere , si l obstacle est entre les deux joueurs renvoie 'dommage tu as touché un caillou'
 
-        for i in range(len(Map.obstacle_dic)):#
+        for i in range(len(Map.obstacle_dic)):
             if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
-                gf = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])*100   
+                gf = round(Map.mapa[Map.prenom[0]][1]-Map.obstacle_dic[i][1] )*100   
                 player1.append(gf)
             else: 
-                gf = round((( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[0]][1])  / (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[0]][0]))*100)   
+                gf = round(((Map.mapa[Map.prenom[0]][1] - Map.obstacle_dic[i][1])  / (Map.mapa[Map.prenom[0]][0] - Map.obstacle_dic[i][0]))*100)   
                 player1.append(gf)
             if (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[1]][0]) == 0 :
-                gf1 = round( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[1]][1])*100   
+                gf1 = round(Map.mapa[Map.prenom[1]][1]- Map.obstacle_dic[i][1])*100  
                 player2.append(gf1)
             else: 
-                gf1 = round((( Map.obstacle_dic[i][1] - Map.mapa[Map.prenom[1]][1])  / (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[1]][0]))*100)   
+                gf1 = round(((Map.mapa[Map.prenom[1]][1] - Map.obstacle_dic[i][1])  / (Map.mapa[Map.prenom[1]][0]-Map.obstacle_dic[i][0]))*100)   
                 player2.append(gf1)
 
-            if player1[i] == player2[i]:
+            if abs(player1[i]) == abs(player2[i]):
 
-                if ((Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[0]][0])and(Map.obstacle_dic[i][0]>Map.mapa[Map.prenom[1]][0]))or ((Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[0]][1])and(Map.obstacle_dic[i][1]>Map.mapa[Map.prenom[1]][1])):
-                    pass 
+                if  (player1[i]<0 and player2[i]>0)or (player1[i]>0 and player2[i]<0):
+                    print(player1[i],player2[i])
+                    pass
                 else:
                     touché_caillou = True
                     print('dommage tu as touché un caillou')  
-#pente
+                    break
+        #pente  
         if touché_caillou == False:
             adv.set_pv(-80)
 
@@ -87,7 +86,7 @@ class ClasseJ:
 
     def __init__(self,basepv,arme,baseforce): #initialiseur
         self._basepv=basepv
-        self.arme = Arme
+        self.arme = arme
         self.baseforce = baseforce
 
 
@@ -152,6 +151,7 @@ class Game:
         self.bouger(0,10)
 
     def bouger(self,dx,dy):
+
         if self._tour > 5:
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
