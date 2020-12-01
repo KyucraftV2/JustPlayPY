@@ -121,6 +121,7 @@ class Arme:
 class Game:
     fenetre = tk.Tk()
     canva = tk.Canvas(fenetre, width=500+10, height=500+10)
+    color_tablo=["red", "blue","black","green","yellow","purple","pink"]
 
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
@@ -173,9 +174,9 @@ class Game:
         Game.canva.pack()
         i=0
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
-            color_tablo=["red", "blue","black","green","yellow","purple","pink"]
+            
 
-            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=color_tablo[player.color[i]]))
+            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=Game.color_tablo[player.color[i]]))
             i+=1
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
