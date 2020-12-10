@@ -66,5 +66,5 @@ LARGEUR = 500
 HAUTEUR = 500
 mazp = Map(500, 500, 20)
 jeu = Game(500, 500, mazp, j1, j2)
-print(f"Le joueur {Game.color_tablo[player.color[1]]} est {nom_j2} et le {Game.color_tablo[player.color[0]} est {nom_j1}")
+print(f"Le joueur {Game.color_tablo[player.color[1]]} est {nom_j2} et le {Game.color_tablo[player.color[0]]} est {nom_j1}")
 jeu.creation(LARGEUR, HAUTEUR)
