@@ -12,7 +12,7 @@ class player:
         Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
-        Game.canva.bind_all('<space>',self.attak )
+        Game.canva.bind_all('<space>',self.attak)
         
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
@@ -28,45 +28,28 @@ class player:
         player.tablo_player.pop(0)
         player.tablo_player[0].attaquer(player.tablo_player[1])
         
-    def caillou_verif(self,x,y):
-        lambda x: x + 1
-        return (lambda x: x + 1)(2)
+    def caillou_verif(self):
+        trajex = Game.canva.create_line(Map.mapa[Map.prenom[0]][0]+5,Map.mapa[Map.prenom[0]][1]+5  ,Map.mapa[Map.prenom[1]][0]+5  ,Map.mapa[Map.prenom[1]][1]+5 ,fill="red" )
+        traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))
+        traj = list(filter(lambda x: (x>2) and (x<23),traj))
+        for i in range(len(traj)):
+            obstacl_traj = list(Game.canva.find_overlapping(Map.obstacle_dic[traj[i]-3][0],Map.obstacle_dic[traj[i]-3][1],Map.obstacle_dic[traj[i]-3][0]+10,Map.obstacle_dic[traj[i]-3][1]+10))
+            if obstacl_traj[-1] > 124:
+                Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
+                return True
+        Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
+        return False
 
+    
     def attaquer(self,adv):
         
-        player1 = []
-        player2 = []
-        touché_caillou = False
+        touché_caillou = self.caillou_verif()
         #pente  fait pour tout les obstacle pour chaque joueur :  (obstacley - joueury) /(obstaclex - joueurx)  si (obstaclex - joueurx) ==0 alor la pente retenu est juste (obstacley - joueury)
         #il les append dans player1 et player2 et puis compare les pentes , si une pente en [0] de player1 est la meme que la pente [0] de player2 alor cela veut dire que un obstacle 
         #est sur la meme pente , soit entre les joueurs ou bien derriere , si l obstacle est entre les deux joueurs renvoie 'dommage tu as touché un caillou'
-
-        for i in range(len(Map.obstacle_dic)):
-            if (Map.mapa[Map.prenom[0]][0]-Map.obstacle_dic[i][0]) == 0 :
-                gf = round(Map.mapa[Map.prenom[0]][1]-Map.obstacle_dic[i][1] )*100   
-                player1.append(gf)
-            else: 
-                gf = round(((Map.mapa[Map.prenom[0]][1] - Map.obstacle_dic[i][1])  / (Map.mapa[Map.prenom[0]][0] - Map.obstacle_dic[i][0]))*100)   
-                player1.append(gf)
-            if (Map.obstacle_dic[i][0] - Map.mapa[Map.prenom[1]][0]) == 0 :
-                gf1 = round(Map.mapa[Map.prenom[1]][1]- Map.obstacle_dic[i][1])*100  
-                player2.append(gf1)
-            else: 
-                gf1 = round(((Map.mapa[Map.prenom[1]][1] - Map.obstacle_dic[i][1])  / (Map.mapa[Map.prenom[1]][0]-Map.obstacle_dic[i][0]))*100)   
-                player2.append(gf1)
-
-            if abs(player1[i]) == abs(player2[i]):
-
-                if  (player1[i]<0 and player2[i]>0)or (player1[i]>0 and player2[i]<0):
-                    print(player1[i],player2[i])
-                    pass
-                else:
-                    touché_caillou = True
-                    print('dommage tu as touché un caillou')  
-                    break
         #pente  
         if touché_caillou == False:
-            adv.set_pv(-80)
+            adv.set_pv(-5)
 
         advpv = adv.get_pv()
         selfpv = self.get_pv()
@@ -121,8 +104,7 @@ class Arme:
 class Game:
     fenetre = tk.Tk()
     canva = tk.Canvas(fenetre, width=500+10, height=500+10)
-    color_tablo=["red", "blue","black","green","yellow","purple","pink"]
-
+    
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
         self.hauteur = hauteur
@@ -130,6 +112,7 @@ class Game:
         self.p1 = p1
         self.p2 = p2
         self._tour = 1
+        
 
     def get_tour(self):
         return self._tour
@@ -150,7 +133,7 @@ class Game:
 
     def bas(self,event):
         self.bouger(0,10)
-
+    
     def bouger(self,dx,dy):
 
         if self._tour > 5:
@@ -167,25 +150,28 @@ class Game:
             Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
         else:
             Game.canva.move(Map.trouv[0],dx,dy)
-        
 
+        
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
         Game.canva.pack()
         i=0
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
-            
+            color_tablo=["red", "blue","black","green","yellow","purple","pink"]
 
-            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=Game.color_tablo[player.color[i]]))
+            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=color_tablo[player.color[i]]))
             i+=1
+
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
+
         
         for i in range(round(self.largeur/10)+1):
             Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="black")#colonnes
 
         for i in range(round(self.largeur/10)+1):
             Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="black")#lignes
+
 
         
 
