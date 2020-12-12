@@ -104,7 +104,9 @@ class Arme:
 class Game:
     fenetre = tk.Tk()
     canva = tk.Canvas(fenetre, width=500+10, height=500+10)
+    color_tablo=["red", "blue","black","green","yellow","purple","pink"]
     
+    i = 0
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
         self.hauteur = hauteur
@@ -135,9 +137,19 @@ class Game:
         self.bouger(0,10)
     
     def bouger(self,dx,dy):
+        if self._tour > 4:
+            Game.i += 1
+            Map.trouv.append(Map.trouv[0])
+            Map.trouv.pop(0)
+            Map.prenom.append(Map.prenom[0])
+            Map.prenom.pop(0)
+            self._tour = 0
+            if Game.i%2 == 0:
+                Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
+            else : 
+                Game.fenetre.configure(bg=Game.color_tablo[player.color[1]])
+        
 
-
-        self.set_tour(1)
         Game.canva.pack()
         #collision border
 
@@ -152,13 +164,9 @@ class Game:
         if caillou_collision_player != []:
             Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
             Game.canva.move(Map.trouv[0],-dx,-dy)
-
-        if self._tour > 4:
-            Map.trouv.append(Map.trouv[0])
-            Map.trouv.pop(0)
-            Map.prenom.append(Map.prenom[0])
-            Map.prenom.pop(0)
-            self._tour = 0
+        
+        self.set_tour(1)
+                
 
         
     def creation(self, largeur, hauteur):
@@ -166,9 +174,8 @@ class Game:
         Game.canva.pack()
         i=0
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
-            color_tablo=["red", "blue","black","green","yellow","purple","pink"]
-
-            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=color_tablo[player.color[i]]))
+        
+            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=Game.color_tablo[player.color[i]]))
             i+=1
 
         for i in range(len(Map.obstacle_dic)):
@@ -183,7 +190,7 @@ class Game:
 
 
         
-
+        Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()
         Game.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
@@ -191,4 +198,5 @@ class Game:
         Game.canva.bind_all('<Up>', self.haut)
         Game.canva.bind_all('<Down>', self.bas)
         Game.canva.bind_all('<space>',)
+        
         Game.fenetre.mainloop()#affiche le canva
