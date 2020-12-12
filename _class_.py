@@ -29,25 +29,25 @@ class player:
         player.tablo_player[0].attaquer(player.tablo_player[1])
         
     def caillou_verif(self):
-        trajex = Game.canva.create_line(Map.mapa[Map.prenom[0]][0]+5,Map.mapa[Map.prenom[0]][1]+5  ,Map.mapa[Map.prenom[1]][0]+5  ,Map.mapa[Map.prenom[1]][1]+5 ,fill="red" )
-        traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))
-        traj = list(filter(lambda x: (x>2) and (x<23),traj))
-        for i in range(len(traj)):
+        trajex = Game.canva.create_line(Map.mapa[Map.prenom[0]][0]+5,Map.mapa[Map.prenom[0]][1]+5  ,Map.mapa[Map.prenom[1]][0]+5  ,Map.mapa[Map.prenom[1]][1]+5 ,fill="red" )#creer un segment entre les deux joueurs
+        traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))#regarde tous les items dans le périmetre 
+        #entre les deux joueurs
+        traj = list(filter(lambda x: (x>2) and (x<23),traj))#1 et deux sont les deux joueurs , de 3 23 ce sont lesz obstacles , et de 24 a 124 ce sont les lignes du tableau 
+        for i in range(len(traj)):#fait pour tous les obstacles dans le périmetre
             obstacl_traj = list(Game.canva.find_overlapping(Map.obstacle_dic[traj[i]-3][0],Map.obstacle_dic[traj[i]-3][1],Map.obstacle_dic[traj[i]-3][0]+10,Map.obstacle_dic[traj[i]-3][1]+10))
-            if obstacl_traj[-1] > 124:
+            #regarde si un item passe sur l obstacle , le -3 est parsque le dico commence a 0 et que les items.obstacles commencent a 3 
+            #items.canva   1-2=joueurs , 3-23 obstacles , 24-124 lignes du plateau  
+            if obstacl_traj[-1] > 124:#si l item a pour id +124 il est un TRAJEX 
                 Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
+                #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
                 return True
         Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
+        #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
         return False
 
-    
     def attaquer(self,adv):
         
         touché_caillou = self.caillou_verif()
-        #pente  fait pour tout les obstacle pour chaque joueur :  (obstacley - joueury) /(obstaclex - joueurx)  si (obstaclex - joueurx) ==0 alor la pente retenu est juste (obstacley - joueury)
-        #il les append dans player1 et player2 et puis compare les pentes , si une pente en [0] de player1 est la meme que la pente [0] de player2 alor cela veut dire que un obstacle 
-        #est sur la meme pente , soit entre les joueurs ou bien derriere , si l obstacle est entre les deux joueurs renvoie 'dommage tu as touché un caillou'
-        #pente  
         if touché_caillou == False:
             adv.set_pv(-5)
 
@@ -111,7 +111,7 @@ class Game:
         self.maap = maap
         self.p1 = p1
         self.p2 = p2
-        self._tour = 1
+        self._tour = 0
         
 
     def get_tour(self):
@@ -136,20 +136,29 @@ class Game:
     
     def bouger(self,dx,dy):
 
-        if self._tour > 5:
-            Map.trouv.append(Map.trouv[0])
-            Map.trouv.pop(0)
-            Map.prenom.append(Map.prenom[0])
-            Map.prenom.pop(0)
-            self._tour = 0
-        else : self.set_tour(1)
+
+        self.set_tour(1)
         Game.canva.pack()
         #collision border
+
         Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] + dx ,Map.mapa[Map.prenom[0]][1] + dy
         if (Map.mapa[Map.prenom[0]][0] > 500) or (Map.mapa[Map.prenom[0]][1] > 500) or (Map.mapa[Map.prenom[0]][0]< 0) or (Map.mapa[Map.prenom[0]][1]< 0):
             Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
         else:
             Game.canva.move(Map.trouv[0],dx,dy)
+        
+        caillou_collision_player = list(Game.canva.find_overlapping(Map.mapa[Map.prenom[0]][0]+4,Map.mapa[Map.prenom[0]][1]+4 ,Map.mapa[Map.prenom[0]][0]+6 ,Map.mapa[Map.prenom[0]][1]+6))
+        caillou_collision_player = list(filter(lambda x: (x>2) and (x<23),caillou_collision_player))
+        if caillou_collision_player != []:
+            Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
+            Game.canva.move(Map.trouv[0],-dx,-dy)
+
+        if self._tour > 4:
+            Map.trouv.append(Map.trouv[0])
+            Map.trouv.pop(0)
+            Map.prenom.append(Map.prenom[0])
+            Map.prenom.pop(0)
+            self._tour = 0
 
         
     def creation(self, largeur, hauteur):
