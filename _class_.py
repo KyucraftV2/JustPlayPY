@@ -39,8 +39,6 @@ class player:
         traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))#regarde tous les items dans le périmetre 
         #entre les deux joueurs
 
-        Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
-        
         traj = list(filter(lambda x: (x>2) and (x<23),traj))#1 et deux sont les deux joueurs , de 3 23 ce sont lesz obstacles , et de 24 a 124 ce sont les lignes du tableau 
         for i in range(len(traj)):#fait pour tous les obstacles dans le périmetre
             obstacl_traj = list(Game.canva.find_overlapping(Map.obstacle_dic[traj[i]-3][0],Map.obstacle_dic[traj[i]-3][1],Map.obstacle_dic[traj[i]-3][0]+10,Map.obstacle_dic[traj[i]-3][1]+10))
@@ -90,7 +88,7 @@ class Arme:
         self._nom = nom
         self._degats = degats
         self.portee = portee
-        print(self.nom)
+
 
     def get_nom(self):  #pour recup le nom de l'arme pour l'affichage aussi
         return self._nom
