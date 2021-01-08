@@ -1,5 +1,5 @@
 from map import * 
-
+import time
 class player:
     tablo_player = []
     color = []
@@ -13,7 +13,7 @@ class player:
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
         Game.canva.bind_all('<space>',self.attak)
-        
+
 
     def get_pv(self): #permet de recuperer les pv pour l'affichage
         return self._pv
@@ -23,30 +23,40 @@ class player:
 
     pv = property(get_pv, set_pv) 
 
-    def attak(self,event): #change place dans tableau--> PB
-        player.tablo_player.append(player.tablo_player[0])
-        player.tablo_player.pop(0)
+    def attak(self,event):  #change place dans tableau--> PB
+        if Game.tour >= 4:
+            Game.marty.check_change()
+            player.tablo_player.append(player.tablo_player[0])
+            player.tablo_player.pop(0)            
+            Game.tour = 0
         player.tablo_player[0].attaquer(player.tablo_player[1])
+        Game.tour+= 1
+        print(Game.tour)
         
+
     def caillou_verif(self):
         trajex = Game.canva.create_line(Map.mapa[Map.prenom[0]][0]+5,Map.mapa[Map.prenom[0]][1]+5  ,Map.mapa[Map.prenom[1]][0]+5  ,Map.mapa[Map.prenom[1]][1]+5 ,fill="red" )#creer un segment entre les deux joueurs
         traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))#regarde tous les items dans le périmetre 
         #entre les deux joueurs
+
+        Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
+        
         traj = list(filter(lambda x: (x>2) and (x<23),traj))#1 et deux sont les deux joueurs , de 3 23 ce sont lesz obstacles , et de 24 a 124 ce sont les lignes du tableau 
         for i in range(len(traj)):#fait pour tous les obstacles dans le périmetre
             obstacl_traj = list(Game.canva.find_overlapping(Map.obstacle_dic[traj[i]-3][0],Map.obstacle_dic[traj[i]-3][1],Map.obstacle_dic[traj[i]-3][0]+10,Map.obstacle_dic[traj[i]-3][1]+10))
             #regarde si un item passe sur l obstacle , le -3 est parsque le dico commence a 0 et que les items.obstacles commencent a 3 
-            #items.canva   1-2=joueurs , 3-23 obstacles , 24-124 lignes du plateau  
-            if obstacl_traj[-1] > 124:#si l item a pour id +124 il est un TRAJEX 
-                Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
+            #items.canva   1-2=joueurs , 3-23 obstacles , 24-124 lignes du plateau
+
+            if obstacl_traj[-1] > 124:#si l item a pour id +124 il est un TRAJEX
                 #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
+                Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
                 return True
+
         Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
         #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
         return False
 
     def attaquer(self,adv):
-        
         touché_caillou = self.caillou_verif()
         if touché_caillou == False:
             adv.set_pv(-5)
@@ -57,13 +67,14 @@ class player:
         if (advpv < 0) or (selfpv<0):
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
+
         print(f'joueur : {self.nom}, pv : {self.pv}')
         print(f'joueur : {adv.nom}, pv : {adv.pv}')
+        
+        score_player_1=Label(Game.fenetre, text=f'{player.tablo_player[0].nom}', bg=Game.color_tablo[player.color[0]]) 
+        score_player_1.pack()
 
-
-
-
-
+        
 
 class ClasseJ:
 
@@ -79,6 +90,7 @@ class Arme:
         self._nom = nom
         self._degats = degats
         self.portee = portee
+        print(self.nom)
 
     def get_nom(self):  #pour recup le nom de l'arme pour l'affichage aussi
         return self._nom
@@ -104,8 +116,9 @@ class Arme:
 class Game:
     fenetre = tk.Tk()
     canva = tk.Canvas(fenetre, width=500+10, height=500+10)
-    color_tablo=["red", "blue","black","green","yellow","purple","pink"]
-    
+    color_tablo=["red", "blue","green","yellow","purple","pink"]
+    tour = 0
+    marty = 0
     i = 0
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
@@ -113,16 +126,7 @@ class Game:
         self.maap = maap
         self.p1 = p1
         self.p2 = p2
-        self._tour = 0
-        
-
-    def get_tour(self):
-        return self._tour
-
-    def set_tour(self, val):
-        self._tour += val
-
-    tour = property(get_tour, set_tour)
+        Game.marty = self 
     
     def droite(self,event):  #fonction pour bouger
         self.bouger(10,0)
@@ -136,20 +140,23 @@ class Game:
     def bas(self,event):
         self.bouger(0,10)
     
-    def bouger(self,dx,dy):
-        if self._tour > 4:
+    def check_change(self):
+        if Game.tour >= 4:
             Game.i += 1
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
             Map.prenom.append(Map.prenom[0])
             Map.prenom.pop(0)
-            self._tour = 0
-            if Game.i%2 == 0:
-                Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
-            else : 
-                Game.fenetre.configure(bg=Game.color_tablo[player.color[1]])
-        
+            Game.tour = 0
+        if Game.i%2 == 0:
+            Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
+        else : 
+            Game.fenetre.configure(bg=Game.color_tablo[player.color[1]])
 
+    def bouger(self,dx,dy):
+
+        self.check_change()
+        
         Game.canva.pack()
         #collision border
 
@@ -165,7 +172,7 @@ class Game:
             Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
             Game.canva.move(Map.trouv[0],-dx,-dy)
         
-        self.set_tour(1)
+        Game.tour+=1
                 
 
         
@@ -179,20 +186,21 @@ class Game:
             i+=1
 
         for i in range(len(Map.obstacle_dic)):
-            Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="grey")
+            Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="black")
 
         
         for i in range(round(self.largeur/10)+1):
-            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="black")#colonnes
+            Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="grey")#colonnes
 
         for i in range(round(self.largeur/10)+1):
-            Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="black")#lignes
+            Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="grey")#lignes     
 
 
-        
         Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()
+
+
         Game.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
         Game.canva.bind_all('<Left>', self.gauche)
         Game.canva.bind_all('<Up>', self.haut)

@@ -28,11 +28,10 @@ while nom_j2 == nom_j1:
 print(r"""
 0. red 
 1. blue
-2. black
-3. green
-4. yellow 
-5. purple 
-6. pink
+2. green
+3. yellow 
+4. purple 
+5. pink
 """)
 
 
@@ -43,7 +42,6 @@ player.color.append(int(input("Couleur Joueur 2:")))
 while player.color[1] == player.color[0]:
     print("Ne choissisez pas deux fois la même couleur !")
     player.color[1]= int(input("Couleur Joueur 2:"))
-
 
 print(r"""
 1. Archer
@@ -66,5 +64,5 @@ LARGEUR = 500
 HAUTEUR = 500
 mazp = Map(500, 500, 20)
 jeu = Game(500, 500, mazp, j1, j2)
-print(f"Le joueur {Game.color_tablo[player.color[1]]} est {nom_j2} et le {Game.color_tablo[player.color[0]]} est {nom_j1}")
+print(f"Le joueur {player.color[1]} est {nom_j2} et le {player.color[0]} est {nom_j1}")
 jeu.creation(LARGEUR, HAUTEUR)
