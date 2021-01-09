@@ -1,3 +1,0 @@
-Collision obstacle faite , 
-hitbox faite 
-couleur du joueur qui joue faite aussi
