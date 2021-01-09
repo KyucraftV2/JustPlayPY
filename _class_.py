@@ -3,27 +3,27 @@ import time
 class player:
     tablo_player = []
     color = []
-    def __init__(self,nom,classe,x,y):
+    def __init__(self,nom,classe,x,y): #initialiseur
         self.classe = ClasseJ
-        self._pv = classe._basepv
-        self.x = x
+        self._pv = classe._basepv #attribut public
+        self.x = x #coordonnées du personnage
         self.y = y
         self.nom = nom 
-        Map.mapa[self.nom] = self.x*10,self.y*10
+        Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
-        Game.canva.bind_all('<space>',self.attak)
+        Game.canva.bind_all('<space>',self.check_tour)
 
 
-    def get_pv(self): 
+    def get_pv(self): #permet de recuperer les pv pour l'affichage
         return self._pv
 
-    def set_pv(self, val): 
+    def set_pv(self, val): #permet de set les pv quand on va se faire taper
         self._pv += val
 
     pv = property(get_pv, set_pv) 
 
-    def attak(self,event):  
+    def check_tour(self,event):  #change place dans tableau--> PB
         if Game.tour >= 4:
             Game.marty.check_change()
             player.tablo_player.append(player.tablo_player[0])
@@ -56,42 +56,47 @@ class player:
 
     def attaquer(self,adv):
         touché_caillou = self.caillou_verif()
+        
+        degats = self.classe.appel_classe.arme.appel_arme.get_degats()
+        resistance = adv.classe.appel_classe.baseforce
+        degats = round(degats/resistance) * 10
+        
         if touché_caillou == False:
-            adv.set_pv(-5)
+            adv.set_pv(-degats)
 
         advpv = adv.get_pv()
         selfpv = self.get_pv()
 
         if (advpv <= 0) or (selfpv<=0):
-            print(a)
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
+        Game.marty.score()
 
-        print(f'joueur : {self.nom}, pv : {self.pv}')
-        print(f'joueur : {adv.nom}, pv : {adv.pv}')
         
-        score_player_1=Label(Game.fenetre, text=f'{player.tablo_player[0].nom}', bg=Game.color_tablo[player.color[0]]) 
-        score_player_1.pack()
 
         
 
 class ClasseJ:
+    appel_classe = 0
     def __init__(self,basepv,arme,baseforce):
         self._basepv=basepv
         self.arme = arme
         self.baseforce = baseforce
+        ClasseJ.appel_classe = self
 
     def getpv(self):
-        return self._basepv
+        return self.basepv
 
     basepv = property(getpv)
 
 
 class Arme:
+    appel_arme = 0
     def __init__(self,nom,degats,portee):
         self._nom = nom
         self._degats = degats
         self.portee = portee
+        Arme.appel_arme = self
 
 
     def get_nom(self):  
@@ -103,7 +108,7 @@ class Arme:
     nom=property(get_nom, set_nom)
 
 
-    def get_degats(self): s
+    def get_degats(self):
         return self._degats
 
     def set_degats(self,val): 
@@ -122,6 +127,8 @@ class Game:
     tour = 0
     marty = 0
     i = 0
+    score_player_1=Label(fenetre)
+
     def __init__(self, largeur, hauteur, maap, p1, p2):
         self.largeur = largeur
         self.hauteur = hauteur
@@ -150,6 +157,7 @@ class Game:
             Map.prenom.append(Map.prenom[0])
             Map.prenom.pop(0)
             Game.tour = 0
+            
         if Game.i%2 == 0:
             Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
         else : 
@@ -197,11 +205,13 @@ class Game:
         for i in range(round(self.largeur/10)+1):
             Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="grey")#lignes     
 
-
         Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
+
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()
 
+        Game.score_player_1.configure(bg='green') 
+        Game.score_player_1.pack()
 
         Game.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
         Game.canva.bind_all('<Left>', self.gauche)
@@ -210,3 +220,33 @@ class Game:
         Game.canva.bind_all('<space>',)
         
         Game.fenetre.mainloop()#affiche le canva
+    
+    def score(self):
+        player_12 = StringVar()
+
+
+        player_12.set(str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'      '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
+        Game.score_player_1.configure(text ='Entrain de Jouer -->' ,textvariable = player_12 )
+
+        '''
+        f"Entrain de jouer->{player.tablo_player[0].nom} : {player.tablo_player[0].pv}  ,  {player.tablo_player[1].nom} : {player.tablo_player[1].pv}"
+        '''
+
+class Map:
+    trouv = []
+    mapa = {}
+    prenom = []
+    obstacle_dic= {}
+
+    def __init__(self,x,y,ob):
+        self.x = x
+        self.y = y
+        self.ob = ob
+        self.créer_obstacl(self.ob)
+
+    def créer_obstacl(self,obstacle):
+        '''
+        obstacle:int
+        '''
+        for i in range(obstacle):
+            Map.obstacle_dic[i] = random.randint(0,round(self.x/10))  *10 , random.randint(0, round(self.y/10)) *10
