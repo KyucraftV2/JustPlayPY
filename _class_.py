@@ -3,27 +3,27 @@ import time
 class player:
     tablo_player = []
     color = []
-    def __init__(self,nom,classe,x,y): #initialiseur
+    def __init__(self,nom,classe,x,y):
         self.classe = ClasseJ
-        self._pv = classe._basepv #attribut public
-        self.x = x #coordonnées du personnage
+        self._pv = classe._basepv
+        self.x = x
         self.y = y
         self.nom = nom 
-        Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
+        Map.mapa[self.nom] = self.x*10,self.y*10
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
         Game.canva.bind_all('<space>',self.attak)
 
 
-    def get_pv(self): #permet de recuperer les pv pour l'affichage
+    def get_pv(self): 
         return self._pv
 
-    def set_pv(self, val): #permet de set les pv quand on va se faire taper
+    def set_pv(self, val): 
         self._pv += val
 
     pv = property(get_pv, set_pv) 
 
-    def attak(self,event):  #change place dans tableau--> PB
+    def attak(self,event):  
         if Game.tour >= 4:
             Game.marty.check_change()
             player.tablo_player.append(player.tablo_player[0])
@@ -62,7 +62,8 @@ class player:
         advpv = adv.get_pv()
         selfpv = self.get_pv()
 
-        if (advpv < 0) or (selfpv<0):
+        if (advpv <= 0) or (selfpv<=0):
+            print(a)
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
 
@@ -75,34 +76,37 @@ class player:
         
 
 class ClasseJ:
-
-    def __init__(self,basepv,arme,baseforce): #initialiseur
+    def __init__(self,basepv,arme,baseforce):
         self._basepv=basepv
         self.arme = arme
         self.baseforce = baseforce
 
+    def getpv(self):
+        return self._basepv
+
+    basepv = property(getpv)
+
 
 class Arme:
-
-    def __init__(self,nom,degats,portee): #initialiseur
+    def __init__(self,nom,degats,portee):
         self._nom = nom
         self._degats = degats
         self.portee = portee
 
 
-    def get_nom(self):  #pour recup le nom de l'arme pour l'affichage aussi
+    def get_nom(self):  
         return self._nom
 
-    def set_nom(self, val):  #pour set le nom de l'arme si jamais --> si jamais on a envie de changer le nom de l'arme 
+    def set_nom(self, val): 
         self._nom = val
 
     nom=property(get_nom, set_nom)
 
 
-    def get_degats(self):  #pour savoir combien l'arme fait --> va servir pour effectuer les combats
+    def get_degats(self): s
         return self._degats
 
-    def set_degats(self,val):  #changer les degats de l'arme si jamais
+    def set_degats(self,val): 
         self._degats = val
 
     degats = property(get_degats,set_degats)

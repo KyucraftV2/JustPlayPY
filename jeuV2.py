@@ -1,5 +1,7 @@
 from _class_ import *
+#from class_ import *
 from def_armes_classe import *
+import random
 
 class_correct = False 
 class_dic = {'1': archer,
@@ -57,9 +59,14 @@ while class_correct == False:
     if check_class(class_type1) == True and check_class(class_type2) == True:
         class_correct = True 
 
+xj1 = randint(0,50)
+xj2 = randint(0,50)
+yj1 = randint(0,50)
+yj2 = randint(0,50)
 
-j1 = player(nom_j1, class_dic[class_type1],18,18)
-j2 = player(nom_j2, class_dic[class_type2], 22, 22)
+
+j1 = player(nom_j1, class_dic[class_type1],xj1,yj1)
+j2 = player(nom_j2, class_dic[class_type2], xj2, yj2)
 LARGEUR = 500
 HAUTEUR = 500
 mazp = Map(500, 500, 20)
