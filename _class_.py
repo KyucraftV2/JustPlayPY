@@ -25,10 +25,10 @@ class player:
 
     def check_tour(self,event):  #change place dans tableau--> PB
         if Game.tour >= 4:
+            Game.tour = 0
             Game.marty.check_change()
             player.tablo_player.append(player.tablo_player[0])
-            player.tablo_player.pop(0)            
-            Game.tour = 0
+            player.tablo_player.pop(0)        
         player.tablo_player[0].attaquer(player.tablo_player[1])
         Game.tour+= 1
         
