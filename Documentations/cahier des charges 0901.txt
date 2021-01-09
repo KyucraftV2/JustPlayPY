@@ -1,0 +1,2 @@
+degats en fonction de la classe et de l'Arme
+affichage joueur qui joue avec nom/pv en bas
