@@ -1,5 +1,4 @@
 from _class_ import *
-#from class_ import *
 from def_armes_classe import *
 import random
 
