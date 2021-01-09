@@ -31,7 +31,6 @@ class player:
             Game.tour = 0
         player.tablo_player[0].attaquer(player.tablo_player[1])
         Game.tour+= 1
-        print(Game.tour)
         
 
     def caillou_verif(self):
@@ -70,6 +69,7 @@ class player:
         if (advpv <= 0) or (selfpv<=0):
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
+        
         Game.marty.score()
 
         
@@ -151,6 +151,8 @@ class Game:
     
     def check_change(self):
         if Game.tour >= 4:
+            player.tablo_player.append(player.tablo_player[0])
+            player.tablo_player.pop(0)   
             Game.i += 1
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
@@ -166,8 +168,9 @@ class Game:
     def bouger(self,dx,dy):
 
         self.check_change()
-        
+        self.score()
         Game.canva.pack()
+        
         #collision border
 
         Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] + dx ,Map.mapa[Map.prenom[0]][1] + dy
@@ -189,6 +192,7 @@ class Game:
     def creation(self, largeur, hauteur):
         Game.fenetre.geometry('%sx%s'%(self.largeur+50,self.hauteur+50))
         Game.canva.pack()
+
         i=0
         for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
         
@@ -206,12 +210,11 @@ class Game:
             Game.canva.create_line(0 , i*10 , self.largeur +10, i*10 , fill="grey")#lignes     
 
         Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
-
+        Game.score_player_1.configure(bg='green') 
+        Game.score_player_1.pack()
         Bouton_Quitter=Button(Game.fenetre, text ='Quitter', command = Game.fenetre.destroy)#boutton pour quitter le jeu
         Bouton_Quitter.pack()
 
-        Game.score_player_1.configure(bg='green') 
-        Game.score_player_1.pack()
 
         Game.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
         Game.canva.bind_all('<Left>', self.gauche)
@@ -220,17 +223,16 @@ class Game:
         Game.canva.bind_all('<space>',)
         
         Game.fenetre.mainloop()#affiche le canva
-    
+
     def score(self):
+        
         player_12 = StringVar()
 
+        player_12.set('Entrain de Jouer -->' +str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'      '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
+        Game.score_player_1.configure(textvariable = player_12 )
 
-        player_12.set(str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'      '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
-        Game.score_player_1.configure(text ='Entrain de Jouer -->' ,textvariable = player_12 )
+        
 
-        '''
-        f"Entrain de jouer->{player.tablo_player[0].nom} : {player.tablo_player[0].pv}  ,  {player.tablo_player[1].nom} : {player.tablo_player[1].pv}"
-        '''
 
 class Map:
     trouv = []
