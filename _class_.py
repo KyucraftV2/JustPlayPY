@@ -9,7 +9,7 @@ class player:
         self.x = x #coordonnées du personnage
         self.y = y
         self.nom = nom 
-        Map.mapa[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans mapa
+        Map.joueur[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans joueur
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
         Game.canva.bind_all('<space>',self.check_tour)
@@ -34,7 +34,7 @@ class player:
         
 
     def caillou_verif(self):
-        trajex = Game.canva.create_line(Map.mapa[Map.prenom[0]][0]+5,Map.mapa[Map.prenom[0]][1]+5  ,Map.mapa[Map.prenom[1]][0]+5  ,Map.mapa[Map.prenom[1]][1]+5 ,fill="red" )#creer un segment entre les deux joueurs
+        trajex = Game.canva.create_line(Map.joueur[Map.prenom[0]][0]+5,Map.joueur[Map.prenom[0]][1]+5  ,Map.joueur[Map.prenom[1]][0]+5  ,Map.joueur[Map.prenom[1]][1]+5 ,fill="red" )#creer un segment entre les deux joueurs
         traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))#regarde tous les items dans le périmetre 
         #entre les deux joueurs
 
@@ -173,16 +173,16 @@ class Game:
         
         #collision border
 
-        Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] + dx ,Map.mapa[Map.prenom[0]][1] + dy
-        if (Map.mapa[Map.prenom[0]][0] > 500) or (Map.mapa[Map.prenom[0]][1] > 500) or (Map.mapa[Map.prenom[0]][0]< 0) or (Map.mapa[Map.prenom[0]][1]< 0):
-            Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
+        Map.joueur[Map.prenom[0]]=Map.joueur[Map.prenom[0]][0] + dx ,Map.joueur[Map.prenom[0]][1] + dy
+        if (Map.joueur[Map.prenom[0]][0] > 500) or (Map.joueur[Map.prenom[0]][1] > 500) or (Map.joueur[Map.prenom[0]][0]< 0) or (Map.joueur[Map.prenom[0]][1]< 0):
+            Map.joueur[Map.prenom[0]]=Map.joueur[Map.prenom[0]][0] - dx ,Map.joueur[Map.prenom[0]][1] - dy
         else:
             Game.canva.move(Map.trouv[0],dx,dy)
         
-        caillou_collision_player = list(Game.canva.find_overlapping(Map.mapa[Map.prenom[0]][0]+4,Map.mapa[Map.prenom[0]][1]+4 ,Map.mapa[Map.prenom[0]][0]+6 ,Map.mapa[Map.prenom[0]][1]+6))
+        caillou_collision_player = list(Game.canva.find_overlapping(Map.joueur[Map.prenom[0]][0]+4,Map.joueur[Map.prenom[0]][1]+4 ,Map.joueur[Map.prenom[0]][0]+6 ,Map.joueur[Map.prenom[0]][1]+6))
         caillou_collision_player = list(filter(lambda x: (x>2) and (x<23),caillou_collision_player))
         if caillou_collision_player != []:
-            Map.mapa[Map.prenom[0]]=Map.mapa[Map.prenom[0]][0] - dx ,Map.mapa[Map.prenom[0]][1] - dy
+            Map.joueur[Map.prenom[0]]=Map.joueur[Map.prenom[0]][0] - dx ,Map.joueur[Map.prenom[0]][1] - dy
             Game.canva.move(Map.trouv[0],-dx,-dy)
         
         Game.tour+=1
@@ -194,9 +194,9 @@ class Game:
         Game.canva.pack()
 
         i=0
-        for key in Map.mapa:#si dans mapa il y a un str alor le faire en bleue car c est un joueur
+        for key in Map.joueur:#si dans joueur il y a un str alor le faire en bleue car c est un joueur
         
-            Map.trouv.append(Game.canva.create_rectangle(Map.mapa[key][0],Map.mapa[key][1],Map.mapa[key][0]+10,Map.mapa[key][1]+10,fill=Game.color_tablo[player.color[i]]))
+            Map.trouv.append(Game.canva.create_rectangle(Map.joueur[key][0],Map.joueur[key][1],Map.joueur[key][0]+10,Map.joueur[key][1]+10,fill=Game.color_tablo[player.color[i]]))
             i+=1
 
         for i in range(len(Map.obstacle_dic)):
@@ -228,7 +228,7 @@ class Game:
         
         player_12 = StringVar()
 
-        player_12.set('Entrain de Jouer -->' +str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'      '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
+        player_12.set('Entrain de Jouer -->' +str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'\t'+'\t'+'Joue dans : ' +str(4 -Game.tour)+' '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
         Game.score_player_1.configure(textvariable = player_12 )
 
         
@@ -236,7 +236,7 @@ class Game:
 
 class Map:
     trouv = []
-    mapa = {}
+    joueur = {}
     prenom = []
     obstacle_dic= {}
 
