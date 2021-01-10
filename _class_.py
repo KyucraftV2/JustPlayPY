@@ -26,7 +26,7 @@ class player:
     def check_tour(self,event):  #change place dans tableau--> PB
         if Game.tour >= 4:
             Game.tour = 0
-            Game.marty.check_change()
+            Game.classe_game.check_change()
             player.tablo_player.append(player.tablo_player[0])
             player.tablo_player.pop(0)        
         player.tablo_player[0].attaquer(player.tablo_player[1])
@@ -38,7 +38,7 @@ class player:
         traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))#regarde tous les items dans le périmetre 
         #entre les deux joueurs
 
-        traj = list(filter(lambda x: (x>2) and (x<23),traj))#1 et deux sont les deux joueurs , de 3 23 ce sont lesz obstacles , et de 24 a 124 ce sont les lignes du tableau 
+        traj = list(filter(lambda x: (x>=3) and (x<=22),traj))#1 et deux sont les deux joueurs , de 3 23 ce sont lesz obstacles , et de 24 a 124 ce sont les lignes du tableau 
         for i in range(len(traj)):#fait pour tous les obstacles dans le périmetre
             obstacl_traj = list(Game.canva.find_overlapping(Map.obstacle_dic[traj[i]-3][0],Map.obstacle_dic[traj[i]-3][1],Map.obstacle_dic[traj[i]-3][0]+10,Map.obstacle_dic[traj[i]-3][1]+10))
             #regarde si un item passe sur l obstacle , le -3 est parsque le dico commence a 0 et que les items.obstacles commencent a 3 
@@ -48,7 +48,6 @@ class player:
                 #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
                 Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
                 return True
-
         Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
         #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
         return False
@@ -70,7 +69,7 @@ class player:
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
         
-        Game.marty.score()
+        Game.classe_game.score()
 
         
 
@@ -125,7 +124,7 @@ class Game:
     canva = tk.Canvas(fenetre, width=500+10, height=500+10)
     color_tablo=["red", "blue","green","yellow","purple","pink"]
     tour = 0
-    marty = 0
+    classe_game = 0
     i = 0
     score_player_1=Label(fenetre)
 
@@ -135,7 +134,7 @@ class Game:
         self.maap = maap
         self.p1 = p1
         self.p2 = p2
-        Game.marty = self 
+        Game.classe_game = self 
     
     def droite(self,event):  #fonction pour bouger
         self.bouger(10,0)
@@ -202,7 +201,6 @@ class Game:
         for i in range(len(Map.obstacle_dic)):
             Game.canva.create_rectangle(Map.obstacle_dic[i][0],Map.obstacle_dic[i][1],Map.obstacle_dic[i][0]+10,Map.obstacle_dic[i][1]+10,fill="black")
 
-        
         for i in range(round(self.largeur/10)+1):
             Game.canva.create_line(i*10 ,0  ,i*10  ,self.largeur+10 , fill="grey")#colonnes
 
@@ -235,6 +233,7 @@ class Game:
 
 
 class Map:
+
     trouv = []
     joueur = {}
     prenom = []
