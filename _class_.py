@@ -27,10 +27,7 @@ class player:
 
     def check_tour(self,event):  #change place dans tableau--> PB
         if Game.tour >= 4:
-            Game.tour = 0
             Game.classe_game.check_change()
-            player.tablo_player.append(player.tablo_player[0])
-            player.tablo_player.pop(0)        
         player.tablo_player[0].attaquer(player.tablo_player[1])
         Game.tour+= 1
         
@@ -152,15 +149,15 @@ class Game:
     
     def check_change(self):
         if Game.tour >= 4:
-            player.tablo_player.append(player.tablo_player[0])
-            player.tablo_player.pop(0)   
+            Game.tour = 0
             Game.i += 1
+            player.tablo_player.append(player.tablo_player[0])
+            player.tablo_player.pop(0)  
             Map.trouv.append(Map.trouv[0])
             Map.trouv.pop(0)
             Map.prenom.append(Map.prenom[0])
             Map.prenom.pop(0)
-            Game.tour = 0
-            
+
         if Game.i%2 == 0:
             Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
         else : 
