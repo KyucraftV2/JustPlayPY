@@ -1,5 +1,7 @@
-from map import * 
 import time
+import random
+import tkinter as tk
+from tkinter import *
 class player:
     tablo_player = []
     color = []
@@ -68,8 +70,8 @@ class player:
         if (advpv <= 0) or (selfpv<=0):
             print(f'{player.tablo_player[0].nom} a gagné')
             Game.fenetre.destroy()
-        
-        Game.classe_game.score()
+        else:
+            Game.classe_game.score()
 
         
 
