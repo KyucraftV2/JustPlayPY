@@ -5,64 +5,64 @@ from tkinter import *
 class player:
     tablo_player = []
     color = []
-    def __init__(self,nom,classe,x,y): #initialiseur
+    def __init__(self,nom,classe,x,y): 
         self.classe = ClasseJ
-        self._pv = classe._basepv #attribut public
-        self.x = x #coordonnées du personnage
+        self._pv = classe._basepv
+        self.x = x 
         self.y = y
         self.nom = nom 
-        Map.joueur[self.nom] = self.x*10,self.y*10#rentre les coordonnées du joueurs dans joueur
+        Map.joueur[self.nom] = self.x*10,self.y*10
         Map.prenom.append(self.nom)
         player.tablo_player.append(self)
         Game.canva.bind_all('<space>',self.check_tour)
 
-
-    def get_pv(self): #permet de recuperer les pv pour l'affichage
+    def get_pv(self): 
         return self._pv
 
-    def set_pv(self, val): #permet de set les pv quand on va se faire taper
+    def set_pv(self, val): 
         self._pv += val
 
-    pv = property(get_pv, set_pv) 
-
-    def check_tour(self,event):  #change place dans tableau--> PB
-        if Game.tour >= 4:
-            Game.classe_game.check_change()
-        player.tablo_player[0].attaquer(player.tablo_player[1])
-        Game.tour+= 1
-        
+    pv = property(get_pv, set_pv)       
 
     def caillou_verif(self):
-        trajex = Game.canva.create_line(Map.joueur[Map.prenom[0]][0]+5,Map.joueur[Map.prenom[0]][1]+5  ,Map.joueur[Map.prenom[1]][0]+5  ,Map.joueur[Map.prenom[1]][1]+5 ,fill="red" )#creer un segment entre les deux joueurs
-        traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))#regarde tous les items dans le périmetre 
-        #entre les deux joueurs
+        trajex = Game.canva.create_line(Map.joueur[Map.prenom[0]][0]+5,Map.joueur[Map.prenom[0]][1]+5  ,Map.joueur[Map.prenom[1]][0]+5  ,Map.joueur[Map.prenom[1]][1]+5 ,fill="red" )
+        traj = list(Game.canva.find_overlapping(Game.canva.coords(trajex)[0],Game.canva.coords(trajex)[1] ,Game.canva.coords(trajex)[2] ,Game.canva.coords(trajex)[3]))
 
         traj = list(filter(lambda x: (x>=3) and (x<=22),traj))#1 et deux sont les deux joueurs , de 3 23 ce sont lesz obstacles , et de 24 a 124 ce sont les lignes du tableau 
-        for i in range(len(traj)):#fait pour tous les obstacles dans le périmetre
+        for i in range(len(traj)):
             obstacl_traj = list(Game.canva.find_overlapping(Map.obstacle_dic[traj[i]-3][0],Map.obstacle_dic[traj[i]-3][1],Map.obstacle_dic[traj[i]-3][0]+10,Map.obstacle_dic[traj[i]-3][1]+10))
-            #regarde si un item passe sur l obstacle , le -3 est parsque le dico commence a 0 et que les items.obstacles commencent a 3 
-            #items.canva   1-2=joueurs , 3-23 obstacles , 24-124 lignes du plateau
+            
 
-            if obstacl_traj[-1] > 124:#si l item a pour id +124 il est un TRAJEX
-                #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
+            if obstacl_traj[-1] > 124:
                 Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
                 return True
         Game.canva.delete(list(filter(lambda x: x>124,list(Game.canva.find_all()))))
-        #Pour tous x ayant un id > 124 dans le canva ,id sera supprimé car un TRAJEX
+
         return False
+
+
+    def check_tour(self,event):
+        if Game.tour >= 4:
+            Game.classe_game.check_change()
+        player.tablo_player[0].attaquer(player.tablo_player[1])
+        
+
 
     def attaquer(self,adv):
         touché_caillou = self.caillou_verif()
-        
         degats = self.classe.appel_classe.arme.appel_arme.get_degats()
         resistance = adv.classe.appel_classe.baseforce
         degats = round(degats/resistance) * 10
-        
+            
         if touché_caillou == False:
             adv.set_pv(-degats)
+            print(self.nom)
+            Game.tour += 4
+
 
         advpv = adv.get_pv()
         selfpv = self.get_pv()
+            #self.classe_game.implant('attaque')
 
         if (advpv <= 0) or (selfpv<=0):
             print(f'{player.tablo_player[0].nom} a gagné')
@@ -134,18 +134,21 @@ class Game:
         self.p1 = p1
         self.p2 = p2
         Game.classe_game = self 
-    
-    def droite(self,event):  #fonction pour bouger
+
+    def droite(self,event): 
         self.bouger(10,0)
+
 
     def gauche(self,event):
         self.bouger(-10,0)
+
 
     def haut(self,event):
         self.bouger(0,-10)
 
     def bas(self,event):
         self.bouger(0,10)
+
     
     def check_change(self):
         if Game.tour >= 4:
@@ -157,6 +160,7 @@ class Game:
             Map.trouv.pop(0)
             Map.prenom.append(Map.prenom[0])
             Map.prenom.pop(0)
+
 
         if Game.i%2 == 0:
             Game.fenetre.configure(bg=Game.color_tablo[player.color[0]])
@@ -213,19 +217,21 @@ class Game:
         Bouton_Quitter.pack()
 
 
-        Game.canva.bind_all('<Right>', self.droite)#fleches directionnelles pour les events
-        Game.canva.bind_all('<Left>', self.gauche)
-        Game.canva.bind_all('<Up>', self.haut)
-        Game.canva.bind_all('<Down>', self.bas)
+        Game.canva.bind_all('d', self.droite)#fleches directionnelles pour les events
+        Game.canva.bind_all('q', self.gauche)
+        Game.canva.bind_all('z', self.haut)
+        Game.canva.bind_all('s', self.bas)
         Game.canva.bind_all('<space>',)
         
-        Game.fenetre.mainloop()#affiche le canva
+        Game.fenetre.mainloop()
 
     def score(self):
         
         player_12 = StringVar()
 
-        player_12.set('Entrain de Jouer -->' +str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'\t'+'\t'+'Joue dans : ' +str(4 -Game.tour)+' '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
+        player_12.set('En train de Jouer -->' +str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'\t'+'\t'+'Joue dans : ' +str(3 -Game.tour)+' '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
+        if 3 - Game.tour < 0:
+            player_12.set('En train de Jouer -->' +str(player.tablo_player[0].nom)+' : '+str(player.tablo_player[0].pv)+'\t'+'\t'+'Joue dans : ' +str(0)+' '+str(player.tablo_player[1].nom)+' : '+str(player.tablo_player[1].pv))
         Game.score_player_1.configure(textvariable = player_12 )
 
         

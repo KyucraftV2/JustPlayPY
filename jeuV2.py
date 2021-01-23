@@ -1,6 +1,6 @@
 from _class_ import *
 from def_armes_classe import *
-import random
+from random import *
 
 class_correct = False 
 class_dic = {'1': archer,
