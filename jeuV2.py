@@ -36,13 +36,13 @@ print(r"""
 """)
 
 
-player.color.append(int(input("Couleur Joueur 1:")))
-player.color.append(int(input("Couleur Joueur 2:")))
+Player.color.append(int(input("Couleur Joueur 1:")))
+Player.color.append(int(input("Couleur Joueur 2:")))
 
 
-while player.color[1] == player.color[0]:
+while Player.color[1] == Player.color[0]:
     print("Ne choissisez pas deux fois la même couleur !")
-    player.color[1]= int(input("Couleur Joueur 2:"))
+    Player.color[1]= int(input("Couleur Joueur 2:"))
 
 print(r"""
 1. Archer
@@ -64,11 +64,11 @@ yj1 = randint(0,50)
 yj2 = randint(0,50)
 
 
-j1 = player(nom_j1, class_dic[class_type1],xj1,yj1)
-j2 = player(nom_j2, class_dic[class_type2], xj2, yj2)
+j1 = Player(nom_j1, class_dic[class_type1],xj1,yj1)
+j2 = Player(nom_j2, class_dic[class_type2], xj2, yj2)
 LARGEUR = 500
 HAUTEUR = 500
 mazp = Map(500, 500, 20)
 jeu = Game(500, 500, mazp, j1, j2)
-print(f"Le joueur {player.color[1]} est {nom_j2} et le {player.color[0]} est {nom_j1}")
+print(f"Le joueur {Player.color[1]} est {nom_j2} et le {player.color[0]} est {nom_j1}")
 jeu.creation(LARGEUR, HAUTEUR)
